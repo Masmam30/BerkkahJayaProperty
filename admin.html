@@ -551,7 +551,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
-        import { getDatabase } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getDatabase, ref, push, set, onValue, remove, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
         import { getStorage } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
 
         const firebaseConfig = {
@@ -570,6 +570,12 @@
         const storage = getStorage(app);
         window.firebaseDB = db;
         window.firebaseStorage = storage;
+        window.firebaseRef = ref;
+        window.firebasePush = push;
+        window.firebaseSet = set;
+        window.firebaseOnValue = onValue;
+        window.firebaseRemove = remove;
+        window.firebaseUpdate = update;
     </script>
 
     <!-- JAVASCRIPT ENGINE -->
@@ -784,7 +790,23 @@
         async function renderAllTables() {
             const surveys = JSON.parse(localStorage.getItem('admin_surveys') || '[]');
             const leads = JSON.parse(localStorage.getItem('admin_leads') || '[]');
-            const products = JSON.parse(localStorage.getItem('admin_products') || '[]');
+            
+            // Mengambil produk dari Firebase Realtime Database
+            if (window.firebaseDB) {
+                const prodRef = window.firebaseRef(window.firebaseDB, 'products');
+                window.firebaseOnValue(prodRef, (snapshot) => {
+                    const data = snapshot.val();
+                    let products = [];
+                    if (data) {
+                        products = Object.keys(data).map(key => ({ id: key, ...data[key] }));
+                    }
+                    localStorage.setItem('admin_products', JSON.stringify(products));
+                    renderProductsTable(products);
+                }, { onlyOnce: true });
+            } else {
+                const products = JSON.parse(localStorage.getItem('admin_products') || '[]');
+                renderProductsTable(products);
+            }
 
             const pSurveys = surveys.filter(s => s.status !== 'Sudah Ditindaklanjuti');
             const pLeads = leads.filter(l => l.status !== 'Sudah Ditindaklanjuti');
@@ -837,6 +859,12 @@
                 </tr>
             `).join('') || `<tr><td colspan="7" class="p-6 text-center text-slateText">Belum ada data.</td></tr>`;
 
+            renderProjectsTable();
+            renderFullSurveysTable(surveys);
+            renderFullLeadsTable(leads);
+        }
+
+        function renderProductsTable(products) {
             const productsTbody = document.getElementById('products-tbody');
             if (productsTbody) {
                 productsTbody.innerHTML = products.map(p => `
@@ -852,12 +880,8 @@
                             <button onclick="deleteProduct('${p.id}')" class="bg-rose-500 text-white px-3 py-1.5 rounded-md text-[10px] font-bold">Hapus</button>
                         </td>
                     </tr>
-                `).join('');
+                `).join('') || `<tr><td colspan="7" class="p-6 text-center text-slateText">Belum ada produk.</td></tr>`;
             }
-
-            renderProjectsTable();
-            renderFullSurveysTable(surveys);
-            renderFullLeadsTable(leads);
         }
 
         function exportLeadsToExcel() {
@@ -1096,13 +1120,27 @@
                 tambahan: document.getElementById('spec-tambahan').value
             };
 
-            let products = JSON.parse(localStorage.getItem('admin_products') || '[]');
-            products.unshift({ id: 'PRD-' + Date.now(), nama, kategori, harga, gambar, specs });
-            localStorage.setItem('admin_products', JSON.stringify(products));
-            liveChannel.postMessage({ type: 'PRODUCTS_UPDATED' });
-            alert('Produk berhasil disimpan & aktif di web utama!');
-            e.target.reset();
-            renderAllTables();
+            if (window.firebaseDB) {
+                const prodRef = window.firebaseRef(window.firebaseDB, 'products');
+                window.firebasePush(prodRef, { nama, kategori, harga, gambar, specs })
+                    .then(() => {
+                        alert('Produk berhasil disimpan ke Firebase Realtime Database & aktif di web utama!');
+                        e.target.reset();
+                        liveChannel.postMessage({ type: 'PRODUCTS_UPDATED' });
+                        renderAllTables();
+                    })
+                    .catch((error) => {
+                        alert('Gagal menyimpan ke Firebase: ' + error.message);
+                    });
+            } else {
+                let products = JSON.parse(localStorage.getItem('admin_products') || '[]');
+                products.unshift({ id: 'PRD-' + Date.now(), nama, kategori, harga, gambar, specs });
+                localStorage.setItem('admin_products', JSON.stringify(products));
+                liveChannel.postMessage({ type: 'PRODUCTS_UPDATED' });
+                alert('Produk berhasil disimpan & aktif di web utama!');
+                e.target.reset();
+                renderAllTables();
+            }
         }
 
         function openModalEdit(id) {
@@ -1129,28 +1167,56 @@
         function handleSaveEditProduct(e) {
             e.preventDefault();
             const id = document.getElementById('edit-prod-id').value;
-            let products = JSON.parse(localStorage.getItem('admin_products') || '[]');
-            const updatedSpecs = {
-                pondasi: document.getElementById('edit-spec-pondasi').value,
-                dinding: document.getElementById('edit-spec-dinding').value,
-                lantai: document.getElementById('edit-spec-lantai').value,
-                atap: document.getElementById('edit-spec-atap').value,
-                tambahan: document.getElementById('edit-spec-tambahan').value
+            const updatedData = {
+                nama: document.getElementById('edit-prod-nama').value,
+                kategori: document.getElementById('edit-prod-kategori').value,
+                harga: document.getElementById('edit-prod-harga').value,
+                gambar: document.getElementById('edit-prod-gambar-base64').value,
+                specs: {
+                    pondasi: document.getElementById('edit-spec-pondasi').value,
+                    dinding: document.getElementById('edit-spec-dinding').value,
+                    lantai: document.getElementById('edit-spec-lantai').value,
+                    atap: document.getElementById('edit-spec-atap').value,
+                    tambahan: document.getElementById('edit-spec-tambahan').value
+                }
             };
-            products = products.map(p => p.id === id ? { ...p, nama: document.getElementById('edit-prod-nama').value, kategori: document.getElementById('edit-prod-kategori').value, harga: document.getElementById('edit-prod-harga').value, specs: updatedSpecs, gambar: document.getElementById('edit-prod-gambar-base64').value } : p);
-            localStorage.setItem('admin_products', JSON.stringify(products));
-            liveChannel.postMessage({ type: 'PRODUCTS_UPDATED' });
-            closeModalEdit();
-            renderAllTables();
+
+            if (window.firebaseDB && !id.startsWith('PRD-local')) {
+                const itemRef = window.firebaseRef(window.firebaseDB, 'products/' + id);
+                window.firebaseUpdate(itemRef, updatedData)
+                    .then(() => {
+                        liveChannel.postMessage({ type: 'PRODUCTS_UPDATED' });
+                        closeModalEdit();
+                        renderAllTables();
+                    })
+                    .catch(err => alert('Gagal update: ' + err.message));
+            } else {
+                let products = JSON.parse(localStorage.getItem('admin_products') || '[]');
+                products = products.map(p => p.id === id ? { ...p, ...updatedData } : p);
+                localStorage.setItem('admin_products', JSON.stringify(products));
+                liveChannel.postMessage({ type: 'PRODUCTS_UPDATED' });
+                closeModalEdit();
+                renderAllTables();
+            }
         }
 
         function deleteProduct(id) {
             if (confirm('Hapus produk ini?')) {
-                let products = JSON.parse(localStorage.getItem('admin_products') || '[]');
-                products = products.filter(p => p.id !== id);
-                localStorage.setItem('admin_products', JSON.stringify(products));
-                liveChannel.postMessage({ type: 'PRODUCTS_UPDATED' });
-                renderAllTables();
+                if (window.firebaseDB && !id.startsWith('PRD-local')) {
+                    const itemRef = window.firebaseRef(window.firebaseDB, 'products/' + id);
+                    window.firebaseRemove(itemRef)
+                        .then(() => {
+                            liveChannel.postMessage({ type: 'PRODUCTS_UPDATED' });
+                            renderAllTables();
+                        })
+                        .catch(err => alert('Gagal menghapus: ' + err.message));
+                } else {
+                    let products = JSON.parse(localStorage.getItem('admin_products') || '[]');
+                    products = products.filter(p => p.id !== id);
+                    localStorage.setItem('admin_products', JSON.stringify(products));
+                    liveChannel.postMessage({ type: 'PRODUCTS_UPDATED' });
+                    renderAllTables();
+                }
             }
         }
 
