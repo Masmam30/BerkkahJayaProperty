@@ -648,7 +648,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
-        import { getDatabase } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
         import { getStorage } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
 
         const firebaseConfig = {
@@ -667,6 +667,8 @@
         const storage = getStorage(app);
         window.firebaseDB = db;
         window.firebaseStorage = storage;
+        window.firebaseRef = ref;
+        window.firebaseOnValue = onValue;
     </script>
 
     <!-- JavaScript Engine -->
@@ -678,12 +680,10 @@
         let selectedProductCategory = '';
         let activeWhatsAppNumber = '6281234567890';
 
-        // Variabel Global untuk Manajemen Cropper
         let cropperInstance = null;
         let activeCropCallback = null;
-        let activeCropAspectRatio = 16 / 9; // Default rasio proporsional web
+        let activeCropAspectRatio = 16 / 9;
 
-        // Fungsi Global Integrasi Crop pada File Input
         function setupImageCropperInput(inputElementId, callback, aspectRatio = 16/9) {
             const inputEl = document.getElementById(inputElementId);
             if (!inputEl) return;
@@ -919,45 +919,68 @@
             { id: 'PRD-4', nama: 'Desain Eksterior Kanopi & Fasad', kategori: 'Desain Eksterior', harga: 450000, gambar: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80', deskripsi: 'Kanopi Alderon Twinwall Frame Hitam Doff, Pagar Aesthetic, & Ornamen Fasad Modern.' }
         ];
 
+        let currentFilterCategory = 'all';
+
         function renderDynamicProducts(filterCategory = 'all') {
+            currentFilterCategory = filterCategory;
             const container = document.getElementById('dynamic-products-grid');
             if (!container) return;
 
-            let products = JSON.parse(localStorage.getItem('admin_products') || JSON.stringify(defaultProducts));
-            if (filterCategory !== 'all') {
-                products = products.filter(p => p.kategori === filterCategory);
-            }
+            // Mengambil data produk langsung dari Firebase Realtime Database
+            if (window.firebaseDB) {
+                const prodRef = window.firebaseRef(window.firebaseDB, 'products');
+                window.firebaseOnValue(prodRef, (snapshot) => {
+                    const data = snapshot.val();
+                    let products = [];
+                    if (data) {
+                        products = Object.keys(data).map(key => ({ id: key, ...data[key] }));
+                    } else {
+                        products = defaultProducts;
+                    }
+                    
+                    let filtered = products;
+                    if (currentFilterCategory !== 'all') {
+                        filtered = products.filter(p => p.kategori === currentFilterCategory);
+                    }
 
-            if (products.length === 0) {
-                container.innerHTML = `<div class="col-span-full text-center py-12 text-slateText text-xs font-semibold">Belum ada produk yang ditambahkan.</div>`;
-                return;
-            }
+                    if (filtered.length === 0) {
+                        container.innerHTML = `<div class="col-span-full text-center py-12 text-slateText text-xs font-semibold">Belum ada produk dalam kategori ini.</div>`;
+                        return;
+                    }
 
-            container.innerHTML = products.map(p => `
-                <div class="bg-white rounded-2xl overflow-hidden border border-borderColor card-shadow card-shadow-hover transition duration-500 flex flex-col justify-between cursor-pointer" onclick="openProductModal('${p.nama}', '${p.kategori}', '${p.harga}', '${p.gambar}', '${p.deskripsi ? p.deskripsi.replace(/'/g, "\\'") : ''}')">
-                    <div>
-                        <div class="relative h-56 overflow-hidden">
-                            <img src="${p.gambar}" alt="${p.nama}" class="w-full h-full object-cover">
-                            <span class="absolute top-4 left-4 bg-navyPrimary/90 backdrop-blur-md text-bronzeGold text-[10px] font-bold px-3 py-1 rounded-md border border-bronzeGold/30 uppercase tracking-wider">
-                                ${p.kategori}
-                            </span>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="font-serif text-xl font-bold text-navyPrimary mb-2">${p.nama}</h3>
-                            <div class="text-2xl font-bold text-bronzeGold mb-4">Rp ${parseInt(p.harga).toLocaleString('id-ID')} <span class="text-xs font-sans text-slateText font-normal">/ m²</span></div>
-                            
-                            <div class="grid grid-cols-1 gap-2 mb-4">
-                                ${formatSpecsWithIcons(p.deskripsi || (p.specs ? Object.values(p.specs).filter(Boolean).join(', ') : ''))}
+                    container.innerHTML = filtered.map(p => {
+                        let descStr = p.deskripsi || '';
+                        if (!descStr && p.specs) {
+                            descStr = Object.values(p.specs).filter(Boolean).join(', ');
+                        }
+                        return `
+                        <div class="bg-white rounded-2xl overflow-hidden border border-borderColor card-shadow card-shadow-hover transition duration-500 flex flex-col justify-between cursor-pointer" onclick="openProductModal('${p.nama.replace(/'/g, "\\'")}', '${p.kategori}', '${p.harga}', '${p.gambar}', '${descStr.replace(/'/g, "\\'")}')">
+                            <div>
+                                <div class="relative h-56 overflow-hidden">
+                                    <img src="${p.gambar}" alt="${p.nama}" class="w-full h-full object-cover">
+                                    <span class="absolute top-4 left-4 bg-navyPrimary/90 backdrop-blur-md text-bronzeGold text-[10px] font-bold px-3 py-1 rounded-md border border-bronzeGold/30 uppercase tracking-wider">
+                                        ${p.kategori}
+                                    </span>
+                                </div>
+                                <div class="p-6">
+                                    <h3 class="font-serif text-xl font-bold text-navyPrimary mb-2">${p.nama}</h3>
+                                    <div class="text-2xl font-bold text-bronzeGold mb-4">Rp ${parseInt(p.harga).toLocaleString('id-ID')} <span class="text-xs font-sans text-slateText font-normal">/ m²</span></div>
+                                    
+                                    <div class="grid grid-cols-1 gap-2 mb-4">
+                                        ${formatSpecsWithIcons(descStr)}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-6 pt-0">
+                                <button onclick="event.stopPropagation(); triggerPreRABModalFromCard('${p.nama.replace(/'/g, "\\'")}', '${p.kategori}')" class="w-full bg-navyPrimary text-white hover:bg-bronzeGold hover:text-navyPrimary font-bold py-3.5 rounded-xl transition text-xs uppercase tracking-widest shadow-sm">
+                                    Minta Penawaran RAB
+                                </button>
                             </div>
                         </div>
-                    </div>
-                    <div class="p-6 pt-0">
-                        <button onclick="event.stopPropagation(); triggerPreRABModalFromCard('${p.nama}', '${p.kategori}')" class="w-full bg-navyPrimary text-white hover:bg-bronzeGold hover:text-navyPrimary font-bold py-3.5 rounded-xl transition text-xs uppercase tracking-widest shadow-sm">
-                            Minta Penawaran RAB
-                        </button>
-                    </div>
-                </div>
-            `).join('');
+                    `;
+                    }).join('');
+                }, { onlyOnce: false });
+            }
         }
 
         function filterProductCategory(cat) {
@@ -1171,7 +1194,7 @@
         }
 
         liveChannel.onmessage = (event) => {
-            if (event.data.type === 'PRODUCTS_UPDATED') renderDynamicProducts();
+            if (event.data.type === 'PRODUCTS_UPDATED') renderDynamicProducts(currentFilterCategory);
             if (event.data.type === 'PROJECTS_UPDATED') renderDynamicGallery();
             if (event.data.type === 'PROFILE_UPDATED') applyOfficeProfile();
             if (event.data.type === 'HERO_CARD_UPDATED') applyHeroCardProfile();
