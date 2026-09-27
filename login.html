@@ -1,3 +1,4 @@
+
 <!-- login.html -->
 <!DOCTYPE html>
 <html lang="id" class="scroll-smooth">
@@ -38,7 +39,6 @@
 </head>
 <body class="bg-navyPrimary text-white font-sans antialiased min-h-screen flex items-center justify-center p-6">
 
-    <!-- Container Login Terpisah -->
     <div class="bg-navySecondary rounded-2xl max-w-md w-full p-8 border border-bronzeGold/30 card-shadow space-y-6">
         <div class="text-center space-y-2">
             <div class="w-14 h-14 bg-bronzeGold text-navyPrimary rounded-2xl mx-auto flex items-center justify-center text-2xl font-serif font-bold shadow-md">
@@ -67,7 +67,7 @@
             </div>
         </form>
 
-        <!-- Form Register Akun Baru -->
+        <!-- Form Register -->
         <form id="form-register" onsubmit="handleAdminRegister(event)" class="space-y-4 hidden">
             <div>
                 <label class="block text-[11px] font-bold text-slateText uppercase tracking-wider mb-1.5">Buat Username</label>
@@ -87,12 +87,10 @@
         </form>
     </div>
 
-    <!-- Firebase SDK & Konfigurasi -->
+    <!-- Firebase SDK -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
-        import { getDatabase } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
-        import { getStorage } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
+        import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyAyuaw2p9dCsSMRNHwzPMVfZ9MHLs79-bU",
@@ -105,14 +103,14 @@
         };
 
         const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
         const db = getDatabase(app);
-        const storage = getStorage(app);
         window.firebaseDB = db;
-        window.firebaseStorage = storage;
+        window.firebaseRef = ref;
+        window.firebaseSet = set;
+        window.firebaseGet = get;
+        window.firebaseChild = child;
     </script>
 
-    <!-- JavaScript Autentikasi -->
     <script>
         function toggleAuthMode(mode) {
             const formLogin = document.getElementById('form-login');
@@ -130,47 +128,63 @@
             }
         }
 
-        function handleAdminRegister(e) {
+        async function handleAdminRegister(e) {
             e.preventDefault();
-            const u = document.getElementById('reg-user').value;
-            const p = document.getElementById('reg-pass').value;
+            const u = document.getElementById('reg-user').value.trim();
+            const p = document.getElementById('reg-pass').value.trim();
 
-            let accounts = JSON.parse(localStorage.getItem('admin_accounts') || '[]');
-            if (accounts.some(acc => acc.username === u)) {
-                alert('Username sudah terdaftar! Gunakan username lain.');
-                return;
-            }
+            const checkFirebase = setInterval(async () => {
+                if (window.firebaseDB && window.firebaseRef && window.firebaseSet && window.firebaseGet) {
+                    clearInterval(checkFirebase);
+                    const dbRef = window.firebaseRef(window.firebaseDB);
+                    const snapshot = await window.firebaseGet(window.firebaseChild(dbRef, `accounts/${u}`));
 
-            accounts.push({ username: u, password: p });
-            localStorage.setItem('admin_accounts', JSON.stringify(accounts));
+                    if (snapshot.exists()) {
+                        alert('Username sudah terdaftar! Gunakan username lain.');
+                        return;
+                    }
 
-            document.getElementById('reg-success').classList.remove('hidden');
-            setTimeout(() => {
-                document.getElementById('reg-success').classList.add('hidden');
-                toggleAuthMode('login');
-            }, 1500);
+                    await window.firebaseSet(window.firebaseRef(window.firebaseDB, `accounts/${u}`), { username: u, password: p });
+                    document.getElementById('reg-success').classList.remove('hidden');
+                    setTimeout(() => {
+                        document.getElementById('reg-success').classList.add('hidden');
+                        toggleAuthMode('login');
+                    }, 1500);
+                }
+            }, 100);
         }
 
-        function handleAdminLogin(e) {
+        async function handleAdminLogin(e) {
             e.preventDefault();
-            const u = document.getElementById('login-user').value;
-            const p = document.getElementById('login-pass').value;
+            const u = document.getElementById('login-user').value.trim();
+            const p = document.getElementById('login-pass').value.trim();
 
-            let accounts = JSON.parse(localStorage.getItem('admin_accounts') || '[]');
-            if (accounts.length === 0) {
-                accounts.push({ username: 'admin', password: 'berkahjaya2026' });
-            }
+            const checkFirebase = setInterval(async () => {
+                if (window.firebaseDB && window.firebaseRef && window.firebaseGet && window.firebaseSet) {
+                    clearInterval(checkFirebase);
+                    const dbRef = window.firebaseRef(window.firebaseDB);
+                    const snapshot = await window.firebaseGet(window.firebaseChild(dbRef, `accounts/${u}`));
 
-            const validAccount = accounts.find(acc => acc.username === u && acc.password === p);
+                    let isValid = false;
+                    if (snapshot.exists()) {
+                        const accData = snapshot.val();
+                        if (accData.password === p) isValid = true;
+                    } else if (u === 'admin' && p === 'berkahjaya2026') {
+                        // Default admin fallback
+                        await window.firebaseSet(window.firebaseRef(window.firebaseDB, 'accounts/admin'), { username: 'admin', password: 'berkahjaya2026' });
+                        isValid = true;
+                    }
 
-            if (validAccount) {
-                localStorage.setItem('admin_logged_in', 'true');
-                window.location.href = 'admin.html';
-            } else {
-                document.getElementById('login-error').classList.remove('hidden');
-            }
+                    if (isValid) {
+                        localStorage.setItem('admin_logged_in', 'true');
+                        window.location.href = 'admin.html';
+                    } else {
+                        document.getElementById('login-error').classList.remove('hidden');
+                    }
+                }
+            }, 100);
         }
     </script>
 </body>
 </html>
-```[cite: 1]
+```[cite: 3]
