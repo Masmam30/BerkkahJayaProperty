@@ -32,7 +32,7 @@
     <!-- Fonts & FontAwesome -->
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Cropper.js CSS -->
+    <!-- Cropper.js CSS untuk Fitur Crop Foto Proporsional -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
     <style>
         .card-shadow { box-shadow: 0 10px 30px -5px rgba(10, 25, 47, 0.05); }
@@ -49,7 +49,7 @@
         <i class="fab fa-whatsapp text-2xl"></i>
     </a>
 
-    <!-- Floating Promo Box -->
+    <!-- Floating Promo Box (Dinamis dari Admin) -->
     <div id="floating-promo-box" class="fixed bottom-8 left-8 z-40 bg-navyPrimary text-white p-4 rounded-2xl shadow-2xl border border-bronzeGold/40 max-w-xs flex items-center gap-3 transition-all duration-500">
         <button onclick="closeFloatingPromo()" class="absolute -top-2.5 -right-2.5 w-6 h-6 bg-rose-500 text-white rounded-full flex items-center justify-center text-xs font-bold hover:bg-rose-600 transition shadow">
             <i class="fas fa-times"></i>
@@ -63,7 +63,7 @@
         </div>
     </div>
 
-    <!-- Header / Navbar -->
+    <!-- Header / Navbar dengan Posisi Teks Rata Kiri Sepenuhnya -->
     <header class="fixed w-full bg-navyPrimary/95 backdrop-blur-md text-white z-40 border-b border-navySecondary/60 transition duration-500 shadow-lg">
         <div class="max-w-7xl mx-auto px-6 lg:px-12">
             <div class="flex items-center justify-between h-20">
@@ -114,7 +114,7 @@
         </div>
     </header>
 
-    <!-- Professional Hero Section -->
+    <!-- Professional Hero Section dengan Video Background & Transparansi Disesuaikan -->
     <section class="relative min-h-[90vh] pt-32 pb-20 md:pt-40 md:pb-28 bg-navyPrimary text-white overflow-hidden flex items-center">
         <video id="main-hero-video" autoplay loop muted playsinline poster="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80" class="absolute inset-0 w-full h-full object-cover z-0 opacity-40">
             <source id="main-hero-source" src="https://assets.mixkit.co/videos/preview/mixkit-modern-architecture-building-41225-large.mp4" type="video/mp4">
@@ -161,7 +161,7 @@
         </div>
     </section>
 
-    <!-- LAYANAN & PRODUK UTAMA -->
+    <!-- SEKSI LAYANAN & PRODUK UTAMA (DINAMIS DARI ADMIN PANEL) -->
     <section id="layanan-produk" class="py-20 bg-white border-t border-borderColor">
         <div class="max-w-7xl mx-auto px-6 lg:px-12">
             <div class="text-center max-w-3xl mx-auto mb-12">
@@ -170,6 +170,7 @@
                 <p class="text-slateText text-sm leading-relaxed">Pilih kategori pekerjaan di bawah untuk melihat rincian produk yang dikelola secara dinamis.</p>
             </div>
 
+            <!-- Tombol Filter 4 Kategori Utama -->
             <div class="flex flex-wrap justify-center gap-3 mb-12">
                 <button onclick="filterProductCategory('all')" class="prod-filter-btn font-bold text-xs uppercase tracking-widest px-5 py-3 rounded-xl bg-navyPrimary text-white shadow-sm transition">Semua Produk</button>
                 <button onclick="filterProductCategory('Pembangunan Dari Nol')" class="prod-filter-btn font-bold text-xs uppercase tracking-widest px-5 py-3 rounded-xl bg-lightBg text-navyPrimary border border-borderColor hover:bg-bronzeGold hover:text-navyPrimary transition">1. Pembangunan dari Nol</button>
@@ -178,14 +179,18 @@
                 <button onclick="filterProductCategory('Desain Eksterior')" class="prod-filter-btn font-bold text-xs uppercase tracking-widest px-5 py-3 rounded-xl bg-lightBg text-navyPrimary border border-borderColor hover:bg-bronzeGold hover:text-navyPrimary transition">4. Desain Eksterior</button>
             </div>
 
-            <div id="dynamic-products-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+            <!-- Grid Container Produk Dinamis -->
+            <div id="dynamic-products-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Render Otomatis via JS -->
+            </div>
         </div>
     </section>
 
-    <!-- COMPANY PROFILE -->
+    <!-- SEKSI COMPANY PROFILE DENGAN FOTO KANTOR -->
     <section id="company-profile" class="py-20 bg-lightBg border-t border-borderColor">
         <div class="max-w-7xl mx-auto px-6 lg:px-12">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <!-- Kolom Kiri: Tentang & Foto Kantor -->
                 <div class="lg:col-span-6 space-y-6">
                     <div>
                         <span class="text-xs font-bold text-bronzeGold uppercase tracking-[0.2em] block mb-2">Tentang Kami</span>
@@ -195,6 +200,7 @@
                         Kami adalah kontraktor umum dan pengembang properti terpercaya yang berfokus pada kualitas presisi tinggi, material berstandar SNI, serta transparansi penuh dalam setiap Rencana Anggaran Biaya (RAB).
                     </p>
                     
+                    <!-- Foto Kantor -->
                     <div class="relative rounded-2xl overflow-hidden border border-borderColor card-shadow">
                         <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1000&q=80" alt="Kantor Berkah Jaya Property" class="w-full h-56 object-cover">
                         <div class="absolute bottom-0 inset-x-0 bg-navyPrimary/90 backdrop-blur-md p-3 text-white text-center border-t border-bronzeGold/20">
@@ -214,6 +220,7 @@
                     </div>
                 </div>
 
+                <!-- Kolom Kanan: Kontak & Alamat Kantor Resmi -->
                 <div class="lg:col-span-6">
                     <div class="bg-navyPrimary text-white p-8 md:p-10 rounded-2xl border border-bronzeGold/30 card-shadow space-y-6">
                         <h3 class="font-serif font-bold text-xl text-bronzeGold border-b border-navySecondary pb-4">Kontak & Alamat Kantor Resmi</h3>
@@ -249,7 +256,7 @@
         </div>
     </section>
 
-    <!-- ALUR KERJA & GARANSI -->
+    <!-- SEKSI ALUR KERJA TRANSPARAN & GARANSI RESMI -->
     <section id="alur-garansi" class="py-20 bg-white border-t border-borderColor">
         <div class="max-w-7xl mx-auto px-6 lg:px-12">
             <div class="text-center max-w-3xl mx-auto mb-16">
@@ -259,6 +266,7 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Langkah 1 -->
                 <div class="bg-lightBg p-8 rounded-2xl border border-borderColor card-shadow card-shadow-hover transition duration-500 relative flex flex-col justify-between">
                     <span class="absolute -top-3 left-6 bg-bronzeGold text-navyPrimary text-[11px] font-serif font-bold px-3 py-1 rounded-md shadow">Langkah 01</span>
                     <div>
@@ -275,6 +283,7 @@
                     </span>
                 </div>
 
+                <!-- Langkah 2 -->
                 <div class="bg-lightBg p-8 rounded-2xl border border-borderColor card-shadow card-shadow-hover transition duration-500 relative flex flex-col justify-between">
                     <span class="absolute -top-3 left-6 bg-bronzeGold text-navyPrimary text-[11px] font-serif font-bold px-3 py-1 rounded-md shadow">Langkah 02</span>
                     <div>
@@ -291,6 +300,7 @@
                     </span>
                 </div>
 
+                <!-- Langkah 3 -->
                 <div class="bg-lightBg p-8 rounded-2xl border border-borderColor card-shadow card-shadow-hover transition duration-500 relative flex flex-col justify-between">
                     <span class="absolute -top-3 left-6 bg-bronzeGold text-navyPrimary text-[11px] font-serif font-bold px-3 py-1 rounded-md shadow">Langkah 03</span>
                     <div>
@@ -307,6 +317,7 @@
                     </span>
                 </div>
 
+                <!-- Langkah 4 -->
                 <div class="bg-navyPrimary text-white p-8 rounded-2xl border-2 border-bronzeGold card-shadow card-shadow-hover transition duration-500 relative flex flex-col justify-between">
                     <span class="absolute -top-3 left-6 bg-bronzeGold text-navyPrimary text-[11px] font-serif font-bold px-3 py-1 rounded-md shadow">Langkah 04</span>
                     <div>
@@ -324,6 +335,7 @@
                 </div>
             </div>
 
+            <!-- Banner Komitmen Tambahan -->
             <div class="mt-12 bg-lightBg p-8 rounded-2xl border border-borderColor card-shadow flex flex-col md:flex-row items-center justify-between gap-6">
                 <div class="flex items-center gap-4">
                     <div class="w-12 h-12 bg-white text-emerald-600 rounded-xl flex items-center justify-center text-xl shrink-0 border border-borderColor shadow-sm">
@@ -341,7 +353,7 @@
         </div>
     </section>
 
-    <!-- GALERI PROYEK -->
+    <!-- SEKSI GALERI PROYEK (DINAMIS INDEXEDDB MULTI-FOTO) -->
     <section id="galeri" class="py-20 bg-lightBg border-t border-borderColor">
         <div class="max-w-7xl mx-auto px-6 lg:px-12">
             <div class="text-center max-w-3xl mx-auto mb-12">
@@ -350,11 +362,14 @@
                 <p class="text-slateText text-sm leading-relaxed">Klik pada proyek untuk melihat seluruh dokumentasi foto hasil pengerjaan.</p>
             </div>
 
-            <div id="dynamic-gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+            <!-- Grid Album Proyek -->
+            <div id="dynamic-gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Injected via JavaScript -->
+            </div>
         </div>
     </section>
 
-    <!-- BEFORE & AFTER -->
+    <!-- SEKSI BEFORE & AFTER (DINAMIS TERHUBUNG KE ADMIN INDEXEDDB) -->
     <section id="before-after" class="py-20 bg-white border-t border-borderColor">
         <div class="max-w-7xl mx-auto px-6 lg:px-12">
             <div class="text-center max-w-3xl mx-auto mb-16">
@@ -367,7 +382,7 @@
                 <div class="relative w-full h-[350px] md:h-[480px] rounded-2xl overflow-hidden card-shadow select-none border border-borderColor" id="slider-container">
                     <img id="ba-img-after" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80" alt="Sesudah" class="absolute inset-0 w-full h-full object-cover">
                     <div id="before-image-wrapper" class="absolute inset-0 w-full h-full overflow-hidden" style="width: 50%;">
-                        <img id="ba-img-before" src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80" alt="Sebelum" class="absolute inset-0 w-full h-full object-cover max-w-none">
+                        <img id="ba-img-before" src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80" alt="Sebelum" class="absolute inset-0 w-full h-full object-cover max-w-none" id="before-img-inner">
                     </div>
 
                     <span class="absolute top-6 left-6 bg-navyPrimary/90 backdrop-blur-md text-white text-xs font-bold px-4 py-2 rounded-lg">SEBELUM</span>
@@ -384,7 +399,7 @@
         </div>
     </section>
 
-    <!-- FORM REQUEST BROSUR & RAB -->
+    <!-- FORM REQUEST BROSUR & RAB PDF -->
     <section id="download-katalog" class="py-20 bg-navyPrimary text-white border-t border-navySecondary">
         <div class="max-w-7xl mx-auto px-6 lg:px-12">
             <div class="bg-navySecondary p-8 md:p-12 rounded-2xl border border-bronzeGold/30 card-shadow max-w-4xl mx-auto text-center">
@@ -424,7 +439,7 @@
         </div>
     </section>
 
-    <!-- KALKULATOR ESTIMASI BIAYA -->
+    <!-- KALKULATOR ESTIMASI BIAYA REAL-TIME -->
     <section id="kalkulator" class="py-20 bg-white border-t border-borderColor">
         <div class="max-w-4xl mx-auto px-6 lg:px-12">
             <div class="bg-lightBg p-8 md:p-12 rounded-2xl border border-borderColor card-shadow">
@@ -506,7 +521,7 @@
         </div>
     </section>
 
-    <!-- LIGHTBOX MODAL -->
+    <!-- POP-UP LIGHTBOX MODAL SLIDER FOTO PROYEK -->
     <div id="project-lightbox-modal" class="fixed inset-0 bg-navyPrimary/95 z-50 hidden flex flex-col justify-between p-6 backdrop-blur-md">
         <div class="flex justify-between items-center text-white border-b border-navySecondary pb-4">
             <div>
@@ -538,7 +553,7 @@
         </div>
     </div>
 
-    <!-- PRODUCT DETAIL MODAL -->
+    <!-- POP-UP DETAIL PRODUK (MODAL BOX) DENGAN IKON VISUAL -->
     <div id="product-detail-modal" class="fixed inset-0 bg-navyPrimary/90 z-50 hidden flex items-center justify-center p-4 backdrop-blur-md">
         <div class="bg-white rounded-2xl max-w-2xl w-full overflow-hidden border border-borderColor shadow-2xl relative">
             <button onclick="closeProductModal()" class="absolute top-4 right-4 z-10 w-10 h-10 bg-navyPrimary/80 text-white rounded-full flex items-center justify-center hover:bg-bronzeGold hover:text-navyPrimary transition">
@@ -554,7 +569,9 @@
                     <hr class="border-borderColor">
                     <div>
                         <h4 class="font-bold text-xs uppercase text-navyPrimary mb-3"><i class="fas fa-list-check text-bronzeGold mr-2"></i> Rincian Spesifikasi Utama:</h4>
-                        <div id="modal-prod-desc" class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-slateText"></div>
+                        <div id="modal-prod-desc" class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-slateText">
+                            <!-- Diisi dinamis via JS dengan ikon visual -->
+                        </div>
                     </div>
                     <div class="pt-4 flex gap-4">
                         <button onclick="triggerPreRABModal()" class="flex-1 bg-bronzeGold text-navyPrimary font-bold py-3.5 rounded-xl text-xs uppercase tracking-widest hover:bg-navyPrimary hover:text-white transition shadow-md text-center">
@@ -566,7 +583,7 @@
         </div>
     </div>
 
-    <!-- PRE-RAB MODAL -->
+    <!-- POP-UP SEBELUM KE FORM RAB (PRE-RAB PROMOTION MODAL) -->
     <div id="pre-rab-modal" class="fixed inset-0 bg-navyPrimary/90 z-50 hidden flex items-center justify-center p-4 backdrop-blur-md">
         <div class="bg-white rounded-2xl max-w-lg w-full p-8 border border-borderColor shadow-2xl relative text-center space-y-6">
             <button onclick="closePreRABModal()" class="absolute top-4 right-4 text-slateText hover:text-navyPrimary text-xl">
@@ -596,7 +613,7 @@
         </div>
     </div>
 
-    <!-- CROPPER MODAL -->
+    <!-- GLOBAL CROPPER MODAL (FITUR CROP OTOMATIS UNTUK SEMUA MENU UPLOAD FOTO) -->
     <div id="global-cropper-modal" class="fixed inset-0 bg-navyPrimary/95 z-50 hidden flex items-center justify-center p-4 backdrop-blur-md">
         <div class="bg-white rounded-2xl max-w-xl w-full p-6 border border-borderColor shadow-2xl relative space-y-4">
             <div class="flex justify-between items-center border-b border-borderColor pb-3">
@@ -624,41 +641,49 @@
         </div>
     </footer>
 
-    <!-- Cropper.js CDN -->
+    <!-- Cropper.js Library CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
 
     <!-- Firebase SDK & Konfigurasi Real-Time Database -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
         import { getDatabase, ref, push, set, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getStorage } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
 
         const firebaseConfig = {
-            apiKey: "AIzaSyAyuaw2p9dCsSMRNHwzPMVfZ9MHLs79-bU",
-            authDomain: "berkahjayaproperty-12b04.firebaseapp.com",
-            projectId: "berkahjayaproperty-12b04",
-            storageBucket: "berkahjayaproperty-12b04.firebasestorage.app",
-            messagingSenderId: "914878815605",
-            appId: "1:914878815605:web:3ee041cabc815e5ce0073c",
-            measurementId: "G-CZ53CRG7Y4"
+            apiKey: "AIzaSyBhFkIM8nFoZQ9dOyiebaN_9cd2yg7d6ls",
+            authDomain: "berkahjayaproperty-85736.firebaseapp.com",
+            projectId: "berkahjayaproperty-85736",
+            storageBucket: "berkahjayaproperty-85736.firebasestorage.app",
+            messagingSenderId: "544081715069",
+            appId: "1:544081715069:web:ebde33bd41d64d9f213614",
+            measurementId: "G-TSNE820RJB"
         };
 
         const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
         const db = getDatabase(app);
+        const storage = getStorage(app);
+        
         window.firebaseDB = db;
+        window.firebaseStorage = storage;
         window.firebaseRef = ref;
         window.firebasePush = push;
         window.firebaseSet = set;
         window.firebaseOnValue = onValue;
     </script>
 
-    <!-- JavaScript Engine & Firebase Real-Time Sync -->
+    <!-- JavaScript Engine -->
     <script>
         let activeProjectPhotos = [];
         let currentPhotoIndex = 0;
         let selectedProductTitle = '';
         let selectedProductCategory = '';
         let activeWhatsAppNumber = '6281234567890';
+        let liveProductsData = [];
 
+        // Variabel Global untuk Manajemen Cropper
         let cropperInstance = null;
         let activeCropCallback = null;
         let activeCropAspectRatio = 16 / 9;
@@ -689,7 +714,9 @@
             targetImg.src = imageSrc;
             modal.classList.remove('hidden');
 
-            if (cropperInstance) { cropperInstance.destroy(); }
+            if (cropperInstance) {
+                cropperInstance.destroy();
+            }
 
             setTimeout(() => {
                 cropperInstance = new Cropper(targetImg, {
@@ -703,7 +730,10 @@
 
         function closeCropperModal() {
             document.getElementById('global-cropper-modal').classList.add('hidden');
-            if (cropperInstance) { cropperInstance.destroy(); cropperInstance = null; }
+            if (cropperInstance) {
+                cropperInstance.destroy();
+                cropperInstance = null;
+            }
         }
 
         function confirmCropImage() {
@@ -714,14 +744,16 @@
                     imageSmoothingQuality: 'high',
                 });
                 const croppedDataUrl = canvas.toDataURL('image/jpeg', 0.9);
-                if (activeCropCallback) { activeCropCallback(croppedDataUrl); }
+                if (activeCropCallback) {
+                    activeCropCallback(croppedDataUrl);
+                }
                 closeCropperModal();
             }
         }
 
         const menuBtn = document.getElementById('menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
-        if(menuBtn) menuBtn.addEventListener('click', () => { mobileMenu.classList.toggle('hidden'); });
+        menuBtn.addEventListener('click', () => { mobileMenu.classList.toggle('hidden'); });
 
         function closeFloatingPromo() {
             const promoBox = document.getElementById('floating-promo-box');
@@ -733,7 +765,9 @@
                 const req = indexedDB.open('BerkahJayaGalleryDB', 2);
                 req.onupgradeneeded = (e) => {
                     const db = e.target.result;
-                    if (!db.objectStoreNames.contains('projects')) { db.createObjectStore('projects', { keyPath: 'id' }); }
+                    if (!db.objectStoreNames.contains('projects')) {
+                        db.createObjectStore('projects', { keyPath: 'id' });
+                    }
                 };
                 req.onsuccess = (e) => resolve(e.target.result);
                 req.onerror = (e) => reject(e.target.error);
@@ -758,7 +792,9 @@
                     req.onsuccess = () => resolve(req.result);
                     req.onerror = (e) => reject(e.target.error);
                 });
-            } catch (e) { return []; }
+            } catch (e) {
+                return [];
+            }
         }
 
         async function applyUploadedHeroVideo() {
@@ -784,110 +820,84 @@
             } catch (e) {}
         }
 
-        function applyHeroCardProfile() {
-            const checkFirebaseSync = setInterval(() => {
-                if (window.firebaseDB && window.firebaseRef && window.firebaseOnValue) {
-                    clearInterval(checkFirebaseSync);
-                    window.firebaseOnValue(window.firebaseRef(window.firebaseDB, 'settings/hero'), (snapshot) => {
-                        const data = snapshot.val();
-                        if (data) {
-                            if (data.title) document.getElementById('hero-card-title-el').textContent = data.title;
-                            if (data.desc) document.getElementById('hero-card-desc-el').innerHTML = `<i class="fas fa-certificate text-bronzeGold mr-1"></i> ${data.desc}`;
-                            if (data.price) document.getElementById('hero-card-price-el').textContent = data.price;
-                            if (data.img) document.getElementById('hero-card-img-el').src = data.img;
-                        }
-                    });
-                }
-            }, 100);
+        function applyHeroCardProfile(hero) {
+            if (hero) {
+                if (hero.title) document.getElementById('hero-card-title-el').textContent = hero.title;
+                if (hero.desc) document.getElementById('hero-card-desc-el').innerHTML = `<i class="fas fa-certificate text-bronzeGold mr-1"></i> ${hero.desc}`;
+                if (hero.price) document.getElementById('hero-card-price-el').textContent = hero.price;
+                if (hero.img) document.getElementById('hero-card-img-el').src = hero.img;
+            }
         }
 
-        function applyFloatingPromo() {
-            const checkFirebaseSync = setInterval(() => {
-                if (window.firebaseDB && window.firebaseRef && window.firebaseOnValue) {
-                    clearInterval(checkFirebaseSync);
-                    window.firebaseOnValue(window.firebaseRef(window.firebaseDB, 'settings/promo'), (snapshot) => {
-                        const promo = snapshot.val();
-                        if (promo) {
-                            if (promo.title) document.getElementById('promo-badge-title').textContent = promo.title;
-                            if (promo.desc) document.getElementById('promo-badge-desc').textContent = promo.desc;
-                        }
-                    });
-                }
-            }, 100);
+        function applyFloatingPromo(promo) {
+            if (promo) {
+                if (promo.title) document.getElementById('promo-badge-title').textContent = promo.title;
+                if (promo.desc) document.getElementById('promo-badge-desc').textContent = promo.desc;
+            }
         }
 
-        function applyCompanyIdentity() {
-            const checkFirebaseSync = setInterval(() => {
-                if (window.firebaseDB && window.firebaseRef && window.firebaseOnValue) {
-                    clearInterval(checkFirebaseSync);
-                    window.firebaseOnValue(window.firebaseRef(window.firebaseDB, 'settings/identity'), (snapshot) => {
-                        const identity = snapshot.val();
-                        if (identity) {
-                            if (identity.name) {
-                                document.getElementById('brand-name-el').textContent = identity.name;
-                                document.getElementById('footer-brand-name').textContent = identity.name + ' & CONTRACTOR';
-                            }
-                            if (identity.tagline) { document.getElementById('brand-tagline-el').textContent = identity.tagline; }
-                            if (identity.logoImg) {
-                                const logoImg = document.getElementById('brand-logo-img');
-                                const logoText = document.getElementById('brand-logo-text');
-                                logoImg.src = identity.logoImg;
-                                logoImg.classList.remove('hidden');
-                                logoText.classList.add('hidden');
-                            } else if (identity.logoText) {
-                                const logoImg = document.getElementById('brand-logo-img');
-                                const logoText = document.getElementById('brand-logo-text');
-                                logoText.textContent = identity.logoText;
-                                logoText.classList.remove('hidden');
-                                logoImg.classList.add('hidden');
-                            }
-                        }
-                    });
+        function applyCompanyIdentity(identity) {
+            if (identity) {
+                if (identity.name) {
+                    document.getElementById('brand-name-el').textContent = identity.name;
+                    document.getElementById('footer-brand-name').textContent = identity.name + ' & CONTRACTOR';
                 }
-            }, 100);
+                if (identity.tagline) {
+                    document.getElementById('brand-tagline-el').textContent = identity.tagline;
+                }
+                if (identity.logoImg) {
+                    const logoImg = document.getElementById('brand-logo-img');
+                    const logoText = document.getElementById('brand-logo-text');
+                    logoImg.src = identity.logoImg;
+                    logoImg.classList.remove('hidden');
+                    logoText.classList.add('hidden');
+                } else if (identity.logoText) {
+                    const logoImg = document.getElementById('brand-logo-img');
+                    const logoText = document.getElementById('brand-logo-text');
+                    logoText.textContent = identity.logoText;
+                    logoText.classList.remove('hidden');
+                    logoImg.classList.add('hidden');
+                }
+            }
         }
 
-        function applyOfficeProfile() {
-            const checkFirebaseSync = setInterval(() => {
-                if (window.firebaseDB && window.firebaseRef && window.firebaseOnValue) {
-                    clearInterval(checkFirebaseSync);
-                    window.firebaseOnValue(window.firebaseRef(window.firebaseDB, 'settings/profile'), (snapshot) => {
-                        const profile = snapshot.val();
-                        if (profile) {
-                            if (profile.wa) activeWhatsAppNumber = profile.wa;
-                            if (profile.alamat) {
-                                const addrEl = document.getElementById('footer-dynamic-address');
-                                if (addrEl) addrEl.innerHTML = `<i class="fas fa-map-marker-alt text-bronzeGold mr-1"></i> Kantor Utama: ${profile.alamat}`;
+        function applyOfficeProfile(profile) {
+            if (profile) {
+                if (profile.wa) activeWhatsAppNumber = profile.wa;
+                if (profile.alamat) {
+                    const addrEl = document.getElementById('footer-dynamic-address');
+                    if (addrEl) addrEl.innerHTML = `<i class="fas fa-map-marker-alt text-bronzeGold mr-1"></i> Kantor Utama: ${profile.alamat}`;
 
-                                const profileAddrEl = document.getElementById('profile-display-alamat');
-                                if (profileAddrEl) profileAddrEl.textContent = profile.alamat;
-                            }
-                            if (profile.wa) {
-                                const profileWaEl = document.getElementById('profile-display-wa');
-                                if (profileWaEl) profileWaEl.textContent = profile.wa;
-                            }
-                        }
-
-                        const floatWA = document.getElementById('floating-wa-btn');
-                        if (floatWA) floatWA.href = `https://wa.me/${activeWhatsAppNumber}?text=Halo%20Berkah%20Jaya%20Property,%20saya%20ingin%20konsultasi%20mengenai%20proyek%20konstruksi`;
-
-                        const navWA = document.getElementById('nav-wa-btn');
-                        if (navWA) navWA.href = `https://wa.me/${activeWhatsAppNumber}?text=Halo%20Berkah%20Jaya%20Property,%20saya%20ingin%20konsultasi`;
-
-                        const modalWA = document.getElementById('modal-wa-consult');
-                        if (modalWA) modalWA.href = `https://wa.me/${activeWhatsAppNumber}?text=Halo%20Berkah%20Jaya%20Property,%20saya%20ingin%20konsultasi%20cepat%20mengenai%20penawaran%20RAB`;
-
-                        const profileBtnWA = document.getElementById('profile-btn-wa');
-                        if (profileBtnWA) profileBtnWA.href = `https://wa.me/${activeWhatsAppNumber}?text=Halo%20Berkah%20Jaya%20Property,%20saya%20ingin%20menghubungi%20kantor`;
-                    });
+                    const profileAddrEl = document.getElementById('profile-display-alamat');
+                    if (profileAddrEl) profileAddrEl.textContent = profile.alamat;
                 }
-            }, 100);
+                if (profile.wa) {
+                    const profileWaEl = document.getElementById('profile-display-wa');
+                    if (profileWaEl) profileWaEl.textContent = profile.wa;
+                }
+            }
+
+            const floatWA = document.getElementById('floating-wa-btn');
+            if (floatWA) floatWA.href = `https://wa.me/${activeWhatsAppNumber}?text=Halo%20Berkah%20Jaya%20Property,%20saya%20ingin%20konsultasi%20mengenai%20proyek%20konstruksi`;
+
+            const navWA = document.getElementById('nav-wa-btn');
+            if (navWA) navWA.href = `https://wa.me/${activeWhatsAppNumber}?text=Halo%20Berkah%20Jaya%20Property,%20saya%20ingin%20konsultasi`;
+
+            const modalWA = document.getElementById('modal-wa-consult');
+            if (modalWA) modalWA.href = `https://wa.me/${activeWhatsAppNumber}?text=Halo%20Berkah%20Jaya%20Property,%20saya%20ingin%20konsultasi%20cepat%20mengenai%20penawaran%20RAB`;
+
+            const profileBtnWA = document.getElementById('profile-btn-wa');
+            if (profileBtnWA) profileBtnWA.href = `https://wa.me/${activeWhatsAppNumber}?text=Halo%20Berkah%20Jaya%20Property,%20saya%20ingin%20menghubungi%20kantor`;
         }
 
         function formatSpecsWithIcons(descText) {
             if (!descText) return '';
             const items = descText.split(/[,.]+/).map(i => i.trim()).filter(i => i.length > 0);
-            const iconsList = ['fa-layer-group', 'fa-cubes', 'fa-th-large', 'fa-house-chimney', 'fa-hammer', 'fa-paint-roller', 'fa-shield-halved', 'fa-bolt'];
+            
+            const iconsList = [
+                'fa-layer-group', 'fa-cubes', 'fa-th-large', 'fa-house-chimney', 
+                'fa-hammer', 'fa-paint-roller', 'fa-shield-halved', 'fa-bolt'
+            ];
 
             return items.map((item, idx) => {
                 const iconClass = iconsList[idx % iconsList.length];
@@ -913,50 +923,41 @@
             const container = document.getElementById('dynamic-products-grid');
             if (!container) return;
 
-            const checkFirebaseSync = setInterval(() => {
-                if (window.firebaseDB && window.firebaseRef && window.firebaseOnValue) {
-                    clearInterval(checkFirebaseSync);
-                    window.firebaseOnValue(window.firebaseRef(window.firebaseDB, 'products'), (snapshot) => {
-                        const val = snapshot.val();
-                        let products = val ? Object.values(val) : defaultProducts;
-                        
-                        if (filterCategory !== 'all') {
-                            products = products.filter(p => p.kategori === filterCategory);
-                        }
+            let products = liveProductsData.length > 0 ? liveProductsData : defaultProducts;
+            if (filterCategory !== 'all') {
+                products = products.filter(p => p.kategori === filterCategory);
+            }
 
-                        if (products.length === 0) {
-                            container.innerHTML = `<div class="col-span-full text-center py-12 text-slateText text-xs font-semibold">Belum ada produk yang ditambahkan.</div>`;
-                            return;
-                        }
+            if (products.length === 0) {
+                container.innerHTML = `<div class="col-span-full text-center py-12 text-slateText text-xs font-semibold">Belum ada produk yang ditambahkan.</div>`;
+                return;
+            }
 
-                        container.innerHTML = products.map(p => `
-                            <div class="bg-white rounded-2xl overflow-hidden border border-borderColor card-shadow card-shadow-hover transition duration-500 flex flex-col justify-between cursor-pointer" onclick="openProductModal('${p.nama}', '${p.kategori}', '${p.harga}', '${p.gambar}', '${p.deskripsi ? p.deskripsi.replace(/'/g, "\\'") : ''}')">
-                                <div>
-                                    <div class="relative h-56 overflow-hidden">
-                                        <img src="${p.gambar}" alt="${p.nama}" class="w-full h-full object-cover">
-                                        <span class="absolute top-4 left-4 bg-navyPrimary/90 backdrop-blur-md text-bronzeGold text-[10px] font-bold px-3 py-1 rounded-md border border-bronzeGold/30 uppercase tracking-wider">
-                                            ${p.kategori}
-                                        </span>
-                                    </div>
-                                    <div class="p-6">
-                                        <h3 class="font-serif text-xl font-bold text-navyPrimary mb-2">${p.nama}</h3>
-                                        <div class="text-2xl font-bold text-bronzeGold mb-4">Rp ${parseInt(p.harga).toLocaleString('id-ID')} <span class="text-xs font-sans text-slateText font-normal">/ m²</span></div>
-                                        
-                                        <div class="grid grid-cols-1 gap-2 mb-4">
-                                            ${formatSpecsWithIcons(p.deskripsi || (p.specs ? Object.values(p.specs).filter(Boolean).join(', ') : ''))}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="p-6 pt-0">
-                                    <button onclick="event.stopPropagation(); triggerPreRABModalFromCard('${p.nama}', '${p.kategori}')" class="w-full bg-navyPrimary text-white hover:bg-bronzeGold hover:text-navyPrimary font-bold py-3.5 rounded-xl transition text-xs uppercase tracking-widest shadow-sm">
-                                        Minta Penawaran RAB
-                                    </button>
-                                </div>
+            container.innerHTML = products.map(p => `
+                <div class="bg-white rounded-2xl overflow-hidden border border-borderColor card-shadow card-shadow-hover transition duration-500 flex flex-col justify-between cursor-pointer" onclick="openProductModal('${p.nama}', '${p.kategori}', '${p.harga}', '${p.gambar}', '${p.deskripsi ? p.deskripsi.replace(/'/g, "\\'") : ''}')">
+                    <div>
+                        <div class="relative h-56 overflow-hidden">
+                            <img src="${p.gambar}" alt="${p.nama}" class="w-full h-full object-cover">
+                            <span class="absolute top-4 left-4 bg-navyPrimary/90 backdrop-blur-md text-bronzeGold text-[10px] font-bold px-3 py-1 rounded-md border border-bronzeGold/30 uppercase tracking-wider">
+                                ${p.kategori}
+                            </span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-serif text-xl font-bold text-navyPrimary mb-2">${p.nama}</h3>
+                            <div class="text-2xl font-bold text-bronzeGold mb-4">Rp ${parseInt(p.harga).toLocaleString('id-ID')} <span class="text-xs font-sans text-slateText font-normal">/ m²</span></div>
+                            
+                            <div class="grid grid-cols-1 gap-2 mb-4">
+                                ${formatSpecsWithIcons(p.deskripsi || '')}
                             </div>
-                        `).join('');
-                    });
-                }
-            }, 100);
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <button onclick="event.stopPropagation(); triggerPreRABModalFromCard('${p.nama}', '${p.kategori}')" class="w-full bg-navyPrimary text-white hover:bg-bronzeGold hover:text-navyPrimary font-bold py-3.5 rounded-xl transition text-xs uppercase tracking-widest shadow-sm">
+                            Minta Penawaran RAB
+                        </button>
+                    </div>
+                </div>
+            `).join('');
         }
 
         function filterProductCategory(cat) {
@@ -978,19 +979,30 @@
             document.getElementById('modal-prod-category').textContent = kategori;
             document.getElementById('modal-prod-price').innerHTML = `Rp ${parseInt(harga).toLocaleString('id-ID')} <span class="text-xs font-sans text-slateText font-normal">/ m²</span>`;
             document.getElementById('modal-prod-img').src = gambar;
+            
             document.getElementById('modal-prod-desc').innerHTML = formatSpecsWithIcons(deskripsi);
 
             document.getElementById('product-detail-modal').classList.remove('hidden');
         }
 
-        function closeProductModal() { document.getElementById('product-detail-modal').classList.add('hidden'); }
-        function triggerPreRABModal() { closeProductModal(); document.getElementById('pre-rab-modal').classList.remove('hidden'); }
+        function closeProductModal() {
+            document.getElementById('product-detail-modal').classList.add('hidden');
+        }
+
+        function triggerPreRABModal() {
+            closeProductModal();
+            document.getElementById('pre-rab-modal').classList.remove('hidden');
+        }
+
         function triggerPreRABModalFromCard(nama, kategori) {
             selectedProductTitle = nama;
             selectedProductCategory = kategori;
             document.getElementById('pre-rab-modal').classList.remove('hidden');
         }
-        function closePreRABModal() { document.getElementById('pre-rab-modal').classList.add('hidden'); }
+
+        function closePreRABModal() {
+            document.getElementById('pre-rab-modal').classList.add('hidden');
+        }
 
         function proceedToRABForm() {
             closePreRABModal();
@@ -1058,13 +1070,24 @@
             document.getElementById('project-lightbox-modal').classList.remove('hidden');
         }
 
-        function closeProjectModal() { document.getElementById('project-lightbox-modal').classList.add('hidden'); }
+        function closeProjectModal() {
+            document.getElementById('project-lightbox-modal').classList.add('hidden');
+        }
+
         function updateModalPhoto() {
             document.getElementById('modal-project-img').src = activeProjectPhotos[currentPhotoIndex];
             document.getElementById('modal-photo-counter').textContent = `Foto ${currentPhotoIndex + 1} dari ${activeProjectPhotos.length}`;
         }
-        function nextProjectPhoto() { currentPhotoIndex = (currentPhotoIndex + 1) % activeProjectPhotos.length; updateModalPhoto(); }
-        function prevProjectPhoto() { currentPhotoIndex = (currentPhotoIndex - 1 + activeProjectPhotos.length) % activeProjectPhotos.length; updateModalPhoto(); }
+
+        function nextProjectPhoto() {
+            currentPhotoIndex = (currentPhotoIndex + 1) % activeProjectPhotos.length;
+            updateModalPhoto();
+        }
+
+        function prevProjectPhoto() {
+            currentPhotoIndex = (currentPhotoIndex - 1 + activeProjectPhotos.length) % activeProjectPhotos.length;
+            updateModalPhoto();
+        }
 
         function handleDownloadCatalog(e) {
             e.preventDefault();
@@ -1073,19 +1096,16 @@
             const kategori = document.getElementById('lead-kategori').value;
             const pesanan = document.getElementById('lead-pesanan').value;
 
-            const checkFirebaseSync = setInterval(() => {
-                if (window.firebaseDB && window.firebaseRef && window.firebasePush && window.firebaseSet) {
-                    clearInterval(checkFirebaseSync);
-                    const newLeadRef = window.firebasePush(window.firebaseRef(window.firebaseDB, 'leads'));
-                    window.firebaseSet(newLeadRef, {
-                        id: 'RAB-' + Date.now().toString().slice(-4),
-                        nama, wa, kategori, pesanan,
-                        status: 'Belum Ditindaklanjuti',
-                        tanggal: new Date().toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' }),
-                        timestamp: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })
-                    });
-                }
-            }, 100);
+            const newLeadRef = window.firebasePush(window.firebaseRef(window.firebaseDB, 'leads'));
+            const newLead = {
+                firebaseKey: newLeadRef.key,
+                id: 'RAB-' + Date.now().toString().slice(-4),
+                nama, wa, kategori, pesanan,
+                status: 'Belum Diproses',
+                tanggal: new Date().toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' }),
+                timestamp: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })
+            };
+            window.firebaseSet(newLeadRef, newLead);
 
             const message = `Halo Admin Berkah Jaya Property, nama saya *${nama}* (${wa}).%0A%0AMeminta penawaran RAB:%0A- *Kategori*: ${kategori}%0A- *Pesanan*: ${pesanan}`;
             window.open(`https://wa.me/${activeWhatsAppNumber}?text=${message}`, '_blank');
@@ -1099,18 +1119,15 @@
             const layanan = document.getElementById('survey-layanan').value;
             const tanggal = document.getElementById('survey-tanggal').value;
 
-            const checkFirebaseSync = setInterval(() => {
-                if (window.firebaseDB && window.firebaseRef && window.firebasePush && window.firebaseSet) {
-                    clearInterval(checkFirebaseSync);
-                    const newSurveyRef = window.firebasePush(window.firebaseRef(window.firebaseDB, 'surveys'));
-                    window.firebaseSet(newSurveyRef, {
-                        id: 'SRV-' + Date.now().toString().slice(-4),
-                        nama, hp, alamat, layanan, tanggal,
-                        status: 'Belum Ditindaklanjuti',
-                        timestamp: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })
-                    });
-                }
-            }, 100);
+            const newSurveyRef = window.firebasePush(window.firebaseRef(window.firebaseDB, 'surveys'));
+            const newSurvey = {
+                firebaseKey: newSurveyRef.key,
+                id: 'SRV-' + Date.now().toString().slice(-4),
+                nama, hp, alamat, layanan, tanggal,
+                status: 'Belum Diproses',
+                timestamp: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })
+            };
+            window.firebaseSet(newSurveyRef, newSurvey);
 
             const message = `Halo Berkah Jaya Property, saya *Request Survey Lokasi Gratis*:%0A- *Nama*: ${nama}%0A- *HP*: ${hp}%0A- *Alamat*: ${alamat}%0A- *Layanan*: ${layanan}%0A- *Tanggal*: ${tanggal}`;
             window.open(`https://wa.me/${activeWhatsAppNumber}?text=${message}`, '_blank');
@@ -1150,17 +1167,38 @@
         }
 
         window.addEventListener('DOMContentLoaded', () => {
-            renderDynamicProducts();
             renderDynamicGallery();
             applyUploadedHeroVideo();
-            applyHeroCardProfile();
-            applyOfficeProfile();
-            applyFloatingPromo();
-            applyCompanyIdentity();
             calculateBiaya();
+
+            const checkFirebase = setInterval(() => {
+                if (window.firebaseDB && window.firebaseRef && window.firebaseOnValue) {
+                    clearInterval(checkFirebase);
+
+                    window.firebaseOnValue(window.firebaseRef(window.firebaseDB, 'products'), (snapshot) => {
+                        const val = snapshot.val();
+                        liveProductsData = val ? Object.values(val) : [];
+                        renderDynamicProducts();
+                    });
+
+                    window.firebaseOnValue(window.firebaseRef(window.firebaseDB, 'settings/profile'), (snapshot) => {
+                        applyOfficeProfile(snapshot.val());
+                    });
+
+                    window.firebaseOnValue(window.firebaseRef(window.firebaseDB, 'settings/hero'), (snapshot) => {
+                        applyHeroCardProfile(snapshot.val());
+                    });
+
+                    window.firebaseOnValue(window.firebaseRef(window.firebaseDB, 'settings/promo'), (snapshot) => {
+                        applyFloatingPromo(snapshot.val());
+                    });
+
+                    window.firebaseOnValue(window.firebaseRef(window.firebaseDB, 'settings/identity'), (snapshot) => {
+                        applyCompanyIdentity(snapshot.val());
+                    });
+                }
+            }, 100);
         });
     </script>
 </body>
 </html>
-
-
