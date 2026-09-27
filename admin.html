@@ -1,3 +1,7 @@
+
+### 2. `admin.html` (Terintegrasi Firebase Real-Time Notifikasi & Cloud Sync)
+
+```html
 <!-- admin.html -->
 <!DOCTYPE html>
 <html lang="id">
@@ -152,7 +156,7 @@
                 </div>
             </div>
 
-            <!-- Tabel Prioritas Penanganan -->
+            <!-- Prioritas Penanganan -->
             <div class="bg-white rounded-2xl border-2 border-rose-200 card-shadow overflow-hidden">
                 <div class="p-6 bg-rose-50/50 border-b border-rose-200 flex justify-between items-center">
                     <h3 class="font-serif font-bold text-navyPrimary text-lg flex items-center gap-2"><i class="fas fa-bell text-rose-500 animate-bounce"></i> Prioritas Penanganan (Belum Ditindaklanjuti)</h3>
@@ -167,7 +171,7 @@
                 </div>
             </div>
 
-            <!-- Tabel Pembukuan Orderan -->
+            <!-- Pembukuan Orderan -->
             <div class="bg-white rounded-2xl border border-borderColor card-shadow overflow-hidden">
                 <div class="p-6 border-b border-borderColor flex justify-between items-center">
                     <h3 class="font-serif font-bold text-navyPrimary text-lg"><i class="fas fa-book text-bronzeGold mr-2"></i> Pembukuan Rekapitulasi Orderan & RAB</h3>
@@ -337,13 +341,13 @@
             </div>
         </div>
 
-        <!-- TAB: GANTI LOGO & NAMA PERUSAHAAN -->
+        <!-- TAB: GANTI LOGO & NAMA -->
         <div id="tab-identity" class="tab-content hidden space-y-6">
             <div class="bg-white p-8 rounded-2xl border border-borderColor card-shadow max-w-3xl space-y-6">
                 <div class="flex justify-between items-center border-b border-borderColor pb-4">
                     <div>
                         <h3 class="font-serif font-bold text-navyPrimary text-xl mb-1">Pengaturan Logo & Identitas Perusahaan</h3>
-                        <p class="text-xs text-slateText">Ubah nama merek, tagline, serta logo teks atau logo gambar (PNG/JPG) navbar utama.</p>
+                        <p class="text-xs text-slateText">Ubah nama merek, tagline, serta logo teks atau logo gambar navbar utama.</p>
                     </div>
                     <span class="bg-emerald-100 text-emerald-800 font-bold px-3 py-1 rounded-full text-xs flex items-center gap-1.5 shadow-sm border border-emerald-300">
                         <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Aktif di Web Utama
@@ -364,7 +368,6 @@
                         <div>
                             <label class="block text-xs font-bold text-navyPrimary uppercase mb-1">Logo Inisial Teks (Default)</label>
                             <input type="text" id="company-logo-text-input" maxlength="3" class="w-full bg-lightBg border border-borderColor rounded-lg p-3 text-xs uppercase text-center font-bold text-bronzeGold" value="B">
-                            <p class="text-[10px] text-slateText mt-1">Digunakan jika tidak mengupload gambar logo.</p>
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-navyPrimary uppercase mb-1">Atau Upload Gambar Logo Baru</label>
@@ -379,7 +382,7 @@
             </div>
         </div>
 
-        <!-- TAB 6: KELOLA BANNER HERO -->
+        <!-- TAB 6: BANNER HERO -->
         <div id="tab-hero" class="tab-content hidden space-y-6">
             <div class="bg-white p-8 rounded-2xl border border-borderColor card-shadow max-w-3xl space-y-6">
                 <div class="flex justify-between items-center border-b border-borderColor pb-4">
@@ -547,34 +550,39 @@
         </div>
     </div>
 
-    <!-- Firebase SDK & Konfigurasi -->
+    <!-- Firebase SDK & Konfigurasi Real-Time Database -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
-        import { getDatabase } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
-        import { getStorage } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
+        import { getDatabase, ref, set, push, onValue, update, remove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
         const firebaseConfig = {
-            apiKey: "AIzaSyBhFkIM8nFoZQ9dOyiebaN_9cd2yg7d6ls",
-            authDomain: "berkahjayaproperty-85736.firebaseapp.com",
-            projectId: "berkahjayaproperty-85736",
-            storageBucket: "berkahjayaproperty-85736.firebasestorage.app",
-            messagingSenderId: "544081715069",
-            appId: "1:544081715069:web:ebde33bd41d64d9f213614",
-            measurementId: "G-TSNE820RJB"
+            apiKey: "AIzaSyAyuaw2p9dCsSMRNHwzPMVfZ9MHLs79-bU",
+            authDomain: "berkahjayaproperty-12b04.firebaseapp.com",
+            projectId: "berkahjayaproperty-12b04",
+            storageBucket: "berkahjayaproperty-12b04.firebasestorage.app",
+            messagingSenderId: "914878815605",
+            appId: "1:914878815605:web:3ee041cabc815e5ce0073c",
+            measurementId: "G-CZ53CRG7Y4"
         };
 
         const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
         const db = getDatabase(app);
-        const storage = getStorage(app);
         window.firebaseDB = db;
-        window.firebaseStorage = storage;
+        window.firebaseRef = ref;
+        window.firebaseSet = set;
+        window.firebasePush = push;
+        window.firebaseOnValue = onValue;
+        window.firebaseUpdate = update;
+        window.firebaseRemove = remove;
     </script>
 
-    <!-- JAVASCRIPT ENGINE -->
+    <!-- JAVASCRIPT ENGINE & FIREBASE REAL-TIME LISTENERS -->
     <script>
-        const liveChannel = new BroadcastChannel('berkah_jaya_realtime');
+        let liveSurveysData = [];
+        let liveLeadsData = [];
+        let liveProductsData = [];
+        let previousSurveysCount = -1;
+        let previousLeadsCount = -1;
 
         function formatWA(phone) {
             if (!phone) return '#';
@@ -598,14 +606,23 @@
             } catch(e) {}
         }
 
+        function showToast(title, message) {
+            const toast = document.getElementById('live-toast');
+            document.getElementById('toast-title').textContent = title;
+            document.getElementById('toast-message').textContent = message;
+            toast.classList.remove('translate-x-full');
+            playBeepSound();
+            setTimeout(() => {
+                toast.classList.add('translate-x-full');
+            }, 5000);
+        }
+
         function openDB() {
             return new Promise((resolve, reject) => {
                 const req = indexedDB.open('BerkahJayaGalleryDB', 2);
                 req.onupgradeneeded = (e) => {
                     const db = e.target.result;
-                    if (!db.objectStoreNames.contains('projects')) {
-                        db.createObjectStore('projects', { keyPath: 'id' });
-                    }
+                    if (!db.objectStoreNames.contains('projects')) { db.createObjectStore('projects', { keyPath: 'id' }); }
                 };
                 req.onsuccess = (e) => resolve(e.target.result);
                 req.onerror = (e) => reject(e.target.error);
@@ -644,18 +661,16 @@
         }
 
         function openVideoDB() {
-    return new Promise((resolve, reject) => {
-        const req = indexedDB.open('BerkahJayaDB', 3);
-        req.onupgradeneeded = (e) => {
-            const db = e.target.result;
-            if (!db.objectStoreNames.contains('videos')) {
-                db.createObjectStore('videos');
-            }
-        };
-        req.onsuccess = (e) => resolve(e.target.result);
-        req.onerror = (e) => reject(e.target.error);
-    });
-}
+            return new Promise((resolve, reject) => {
+                const req = indexedDB.open('BerkahJayaDB', 3);
+                req.onupgradeneeded = (e) => {
+                    const db = e.target.result;
+                    if (!db.objectStoreNames.contains('videos')) { db.createObjectStore('videos'); }
+                };
+                req.onsuccess = (e) => resolve(e.target.result);
+                req.onerror = (e) => reject(e.target.error);
+            });
+        }
 
         async function handleVideoUpload(e) {
             e.preventDefault();
@@ -677,7 +692,6 @@
                 tx.oncomplete = () => {
                     alert('Video Hero Berhasil Disimpan & Aktif di Web Utama!');
                     fileInput.value = '';
-                    liveChannel.postMessage({ type: 'VIDEO_UPDATED' });
                 };
             } catch (err) {
                 alert('Gagal menyimpan video: ' + err.message);
@@ -690,13 +704,10 @@
             const desc = document.getElementById('hero-card-desc').value;
             const price = document.getElementById('hero-card-price').value;
             let img = document.getElementById('hero-card-base64').value;
-
-            const existing = JSON.parse(localStorage.getItem('admin_hero_card') || '{}');
-            if (!img) img = existing.img || 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=80';
+            if (!img) img = 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=80';
 
             const heroData = { title, desc, price, img };
-            localStorage.setItem('admin_hero_card', JSON.stringify(heroData));
-            liveChannel.postMessage({ type: 'HERO_CARD_UPDATED', data: heroData });
+            window.firebaseSet(window.firebaseRef(window.firebaseDB, 'settings/hero'), heroData);
             alert('Banner Kartu Hero Berhasil Disimpan & Aktif di Web Utama!');
         }
 
@@ -706,8 +717,7 @@
             const desc = document.getElementById('promo-desc-input').value;
 
             const promoData = { title, desc };
-            localStorage.setItem('admin_floating_promo', JSON.stringify(promoData));
-            liveChannel.postMessage({ type: 'PROMO_UPDATED', data: promoData });
+            window.firebaseSet(window.firebaseRef(window.firebaseDB, 'settings/promo'), promoData);
             alert('Floating Promo Berhasil Disimpan & Aktif di Web Utama!');
         }
 
@@ -716,14 +726,10 @@
             const name = document.getElementById('company-name-input').value;
             const tagline = document.getElementById('company-tagline-input').value;
             const logoText = document.getElementById('company-logo-text-input').value;
-            let logoImg = document.getElementById('company-logo-base64').value;
-
-            const existing = JSON.parse(localStorage.getItem('admin_company_identity') || '{}');
-            if (!logoImg) logoImg = existing.logoImg || '';
+            let logoImg = document.getElementById('company-logo-base64').value || '';
 
             const identityData = { name, tagline, logoText, logoImg };
-            localStorage.setItem('admin_company_identity', JSON.stringify(identityData));
-            liveChannel.postMessage({ type: 'IDENTITY_UPDATED', data: identityData });
+            window.firebaseSet(window.firebaseRef(window.firebaseDB, 'settings/identity'), identityData);
             alert('Logo & Identitas Perusahaan Berhasil Disimpan & Aktif di Web Utama!');
         }
 
@@ -733,8 +739,7 @@
             const alamat = document.getElementById('kantor-alamat').value;
 
             const profileData = { wa, alamat };
-            localStorage.setItem('admin_office_profile', JSON.stringify(profileData));
-            liveChannel.postMessage({ type: 'PROFILE_UPDATED', data: profileData });
+            window.firebaseSet(window.firebaseRef(window.firebaseDB, 'settings/profile'), profileData);
             alert('Kontak & Alamat Kantor Berhasil Disimpan & Aktif di Web Utama!');
         }
 
@@ -781,10 +786,10 @@
             if (leadsCount > 0) { bLd.textContent = leadsCount; bLd.classList.remove('hidden'); } else { bLd.classList.add('hidden'); }
         }
 
-        async function renderAllTables() {
-            const surveys = JSON.parse(localStorage.getItem('admin_surveys') || '[]');
-            const leads = JSON.parse(localStorage.getItem('admin_leads') || '[]');
-            const products = JSON.parse(localStorage.getItem('admin_products') || '[]');
+        function renderAllTables() {
+            const surveys = liveSurveysData;
+            const leads = liveLeadsData;
+            const products = liveProductsData;
 
             const pSurveys = surveys.filter(s => s.status !== 'Sudah Ditindaklanjuti');
             const pLeads = leads.filter(l => l.status !== 'Sudah Ditindaklanjuti');
@@ -815,8 +820,8 @@
                         <td class="p-4 max-w-xs truncate">${detail}</td>
                         <td class="p-4"><span class="bg-rose-100 text-rose-700 font-bold px-2.5 py-1 rounded-full text-[10px] border border-rose-300">Belum Diproses</span></td>
                         <td class="p-4 text-right space-x-1">
-                            <button onclick="openClientDetail('${isSrv ? 'survey' : 'lead'}', '${item.id}')" class="bg-navyPrimary text-white px-2.5 py-1.5 rounded-md text-[10px] font-bold hover:bg-bronzeGold hover:text-navyPrimary transition">Detail</button>
-                            <button onclick="handleActionClick('${isSrv ? 'survey' : 'lead'}', '${item.id}')" class="bg-emerald-600 text-white px-2.5 py-1.5 rounded-md text-[10px] font-bold hover:bg-emerald-700 transition"><i class="fab fa-whatsapp"></i> Chat</button>
+                            <button onclick="openClientDetail('${isSrv ? 'survey' : 'lead'}', '${item.firebaseKey}')" class="bg-navyPrimary text-white px-2.5 py-1.5 rounded-md text-[10px] font-bold hover:bg-bronzeGold hover:text-navyPrimary transition">Detail</button>
+                            <button onclick="handleActionClick('${isSrv ? 'survey' : 'lead'}', '${item.firebaseKey}')" class="bg-emerald-600 text-white px-2.5 py-1.5 rounded-md text-[10px] font-bold hover:bg-emerald-700 transition"><i class="fab fa-whatsapp"></i> Chat</button>
                         </td>
                     </tr>`;
                 }).join('');
@@ -831,8 +836,8 @@
                     <td class="p-4 font-semibold text-navyPrimary">${l.kategori}</td>
                     <td class="p-4"><span class="${l.status === 'Sudah Ditindaklanjuti' ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700'} font-bold px-2.5 py-1 rounded-full text-[10px]">${l.status || 'Belum Diproses'}</span></td>
                     <td class="p-4 text-right space-x-1">
-                        <button onclick="openClientDetail('lead', '${l.id}')" class="bg-lightBg border text-navyPrimary px-2.5 py-1.5 rounded-md text-[10px] font-bold">Detail</button>
-                        <button onclick="handleActionClick('lead', '${l.id}')" class="bg-navyPrimary text-white px-2.5 py-1.5 rounded-md text-[10px] font-bold hover:bg-bronzeGold hover:text-navyPrimary transition"><i class="fab fa-whatsapp"></i> Chat</button>
+                        <button onclick="openClientDetail('lead', '${l.firebaseKey}')" class="bg-lightBg border text-navyPrimary px-2.5 py-1.5 rounded-md text-[10px] font-bold">Detail</button>
+                        <button onclick="handleActionClick('lead', '${l.firebaseKey}')" class="bg-navyPrimary text-white px-2.5 py-1.5 rounded-md text-[10px] font-bold hover:bg-bronzeGold hover:text-navyPrimary transition"><i class="fab fa-whatsapp"></i> Chat</button>
                     </td>
                 </tr>
             `).join('') || `<tr><td colspan="7" class="p-6 text-center text-slateText">Belum ada data.</td></tr>`;
@@ -845,11 +850,11 @@
                         <td class="p-4 font-bold text-navyPrimary">${p.nama}</td>
                         <td class="p-4"><span class="bg-navyPrimary text-white text-[10px] px-2.5 py-1 rounded-md">${p.kategori}</span></td>
                         <td class="p-4 font-mono font-bold text-bronzeGold">Rp ${parseInt(p.harga).toLocaleString('id-ID')} / m²</td>
-                        <td class="p-4 text-[11px]">${p.specs ? Object.values(p.specs).filter(Boolean).join(' | ') : '-'}</td>
+                        <td class="p-4 text-[11px]">${p.deskripsi || '-'}</td>
                         <td class="p-4"><span class="bg-emerald-100 text-emerald-800 font-bold px-2.5 py-1 rounded-full text-[9px] border border-emerald-300 inline-flex items-center gap-1"><span class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span> Aktif di Web</span></td>
                         <td class="p-4 text-right space-x-2">
-                            <button onclick="openModalEdit('${p.id}')" class="bg-bronzeGold text-navyPrimary px-3 py-1.5 rounded-md text-[10px] font-bold">Edit</button>
-                            <button onclick="deleteProduct('${p.id}')" class="bg-rose-500 text-white px-3 py-1.5 rounded-md text-[10px] font-bold">Hapus</button>
+                            <button onclick="openModalEdit('${p.firebaseKey}')" class="bg-bronzeGold text-navyPrimary px-3 py-1.5 rounded-md text-[10px] font-bold">Edit</button>
+                            <button onclick="deleteProduct('${p.firebaseKey}')" class="bg-rose-500 text-white px-3 py-1.5 rounded-md text-[10px] font-bold">Hapus</button>
                         </td>
                     </tr>
                 `).join('');
@@ -861,14 +866,10 @@
         }
 
         function exportLeadsToExcel() {
-            const leads = JSON.parse(localStorage.getItem('admin_leads') || '[]');
-            if (leads.length === 0) {
-                alert('Tidak ada data orderan atau RAB untuk diexport.');
-                return;
-            }
+            const leads = liveLeadsData;
+            if (leads.length === 0) { alert('Tidak ada data orderan atau RAB untuk diexport.'); return; }
 
             let csvContent = "ID Order,Tanggal Masuk,Nama Pelanggan,Nomor WhatsApp,Kategori Pekerjaan,Keterangan Pesanan,Status\n";
-            
             leads.forEach(l => {
                 const row = [
                     `"${l.id || ''}"`,
@@ -905,8 +906,8 @@
                     <td class="p-4 font-mono">${s.tanggal}</td>
                     <td class="p-4"><span class="${s.status === 'Sudah Ditindaklanjuti' ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700'} font-bold px-2 py-1 rounded-full text-[10px]">${s.status || 'Belum Diproses'}</span></td>
                     <td class="p-4 text-right space-x-1">
-                        <button onclick="openClientDetail('survey', '${s.id}')" class="bg-navyPrimary text-white px-2.5 py-1.5 rounded-md text-[10px] font-bold">Detail</button>
-                        <button onclick="handleActionClick('survey', '${s.id}')" class="bg-emerald-600 text-white px-2.5 py-1.5 rounded-md text-[10px] font-bold"><i class="fab fa-whatsapp"></i> Chat</button>
+                        <button onclick="openClientDetail('survey', '${s.firebaseKey}')" class="bg-navyPrimary text-white px-2.5 py-1.5 rounded-md text-[10px] font-bold">Detail</button>
+                        <button onclick="handleActionClick('survey', '${s.firebaseKey}')" class="bg-emerald-600 text-white px-2.5 py-1.5 rounded-md text-[10px] font-bold"><i class="fab fa-whatsapp"></i> Chat</button>
                     </td>
                 </tr>
             `).join('') || `<tr><td colspan="8" class="p-6 text-center text-slateText">Belum ada data.</td></tr>`;
@@ -924,16 +925,16 @@
                     <td class="p-4 max-w-xs truncate">${l.pesanan || '-'}</td>
                     <td class="p-4"><span class="${l.status === 'Sudah Ditindaklanjuti' ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700'} font-bold px-2 py-1 rounded-full text-[10px]">${l.status || 'Belum Diproses'}</span></td>
                     <td class="p-4 text-right space-x-1">
-                        <button onclick="openClientDetail('lead', '${l.id}')" class="bg-navyPrimary text-white px-2.5 py-1.5 rounded-md text-[10px] font-bold">Detail</button>
-                        <button onclick="handleActionClick('lead', '${l.id}')" class="bg-emerald-600 text-white px-2.5 py-1.5 rounded-md text-[10px] font-bold"><i class="fab fa-whatsapp"></i> Chat</button>
+                        <button onclick="openClientDetail('lead', '${l.firebaseKey}')" class="bg-navyPrimary text-white px-2.5 py-1.5 rounded-md text-[10px] font-bold">Detail</button>
+                        <button onclick="handleActionClick('lead', '${l.firebaseKey}')" class="bg-emerald-600 text-white px-2.5 py-1.5 rounded-md text-[10px] font-bold"><i class="fab fa-whatsapp"></i> Chat</button>
                     </td>
                 </tr>
             `).join('') || `<tr><td colspan="7" class="p-6 text-center text-slateText">Belum ada data.</td></tr>`;
         }
 
-        function openClientDetail(type, id) {
-            const list = JSON.parse(localStorage.getItem(type === 'survey' ? 'admin_surveys' : 'admin_leads') || '[]');
-            const item = list.find(d => d.id === id);
+        function openClientDetail(type, firebaseKey) {
+            const list = type === 'survey' ? liveSurveysData : liveLeadsData;
+            const item = list.find(d => d.firebaseKey === firebaseKey);
             if (!item) return;
 
             document.getElementById('modal-detail-title').textContent = type === 'survey' ? 'Detail Permintaan Survey' : 'Detail Permintaan RAB';
@@ -963,26 +964,25 @@
 
         function closeModalDetail() { document.getElementById('modal-detail-client').classList.add('hidden'); }
 
-        function handleActionClick(type, id) {
+        function handleActionClick(type, firebaseKey) {
             let item = null, phone = '', msg = '';
+            const path = type === 'survey' ? `surveys/${firebaseKey}` : `leads/${firebaseKey}`;
+            
+            window.firebaseUpdate(window.firebaseRef(window.firebaseDB, path), { status: 'Sudah Ditindaklanjuti' });
+
             if (type === 'survey') {
-                let surveys = JSON.parse(localStorage.getItem('admin_surveys') || '[]');
-                surveys = surveys.map(s => { if (s.id === id) { s.status = 'Sudah Ditindaklanjuti'; item = s; } return s; });
-                localStorage.setItem('admin_surveys', JSON.stringify(surveys));
+                item = liveSurveysData.find(s => s.firebaseKey === firebaseKey);
                 if (item) {
                     phone = formatWA(item.hp);
                     msg = `Halo *${item.nama}*, terima kasih telah mengajukan *Survey Lokasi Gratis* di Berkah Jaya Property untuk layanan *${item.layanan}* pada *${item.tanggal}* di *${item.alamat}*. Tim teknis kami siap hadir.`;
                 }
             } else {
-                let leads = JSON.parse(localStorage.getItem('admin_leads') || '[]');
-                leads = leads.map(l => { if (l.id === id) { l.status = 'Sudah Ditindaklanjuti'; item = l; } return l; });
-                localStorage.setItem('admin_leads', JSON.stringify(leads));
+                item = liveLeadsData.find(l => l.firebaseKey === firebaseKey);
                 if (item) {
                     phone = formatWA(item.wa);
                     msg = `Halo *${item.nama}*, terima kasih telah menghubungi Berkah Jaya Property. Kami telah menerima permintaan *RAB* Anda untuk *${item.kategori}*. Kami sedang menyiapkan rincian anggarannya.`;
                 }
             }
-            renderAllTables();
             if (phone) window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
@@ -1023,9 +1023,7 @@
                 const files = Array.from(document.getElementById('proj-photos-file').files);
 
                 let photos = [];
-                for (let f of files) {
-                    photos.push(await readAndCompressFile(f));
-                }
+                for (let f of files) { photos.push(await readAndCompressFile(f)); }
 
                 let beforeImg = null, afterImg = null;
                 if (isBA) {
@@ -1038,7 +1036,6 @@
                 const newProj = { id: 'PRJ-' + Date.now(), judul, kategori, photos, isBeforeAfter: isBA, beforeImg, afterImg };
                 await saveProjectToDB(newProj);
                 
-                liveChannel.postMessage({ type: 'PROJECTS_UPDATED' });
                 alert('Album Proyek Berhasil Disimpan & Aktif di Web Utama!');
                 e.target.reset();
                 toggleBeforeAfterInputs(false);
@@ -1054,7 +1051,6 @@
         async function handleDeleteProject(id) {
             if (confirm('Hapus album proyek ini?')) {
                 await deleteProjectFromDB(id);
-                liveChannel.postMessage({ type: 'PROJECTS_UPDATED' });
                 renderProjectsTable();
             }
         }
@@ -1088,39 +1084,34 @@
             const kategori = document.getElementById('prod-kategori').value;
             const harga = document.getElementById('prod-harga').value;
             const gambar = document.getElementById('prod-gambar-base64').value || 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80';
-            const specs = {
-                pondasi: document.getElementById('spec-pondasi').value,
-                dinding: document.getElementById('spec-dinding').value,
-                lantai: document.getElementById('spec-lantai').value,
-                atap: document.getElementById('spec-atap').value,
-                tambahan: document.getElementById('spec-tambahan').value
-            };
+            const deskripsi = [
+                document.getElementById('spec-pondasi').value,
+                document.getElementById('spec-dinding').value,
+                document.getElementById('spec-lantai').value,
+                document.getElementById('spec-atap').value,
+                document.getElementById('spec-tambahan').value
+            ].filter(Boolean).join(', ');
 
-            let products = JSON.parse(localStorage.getItem('admin_products') || '[]');
-            products.unshift({ id: 'PRD-' + Date.now(), nama, kategori, harga, gambar, specs });
-            localStorage.setItem('admin_products', JSON.stringify(products));
-            liveChannel.postMessage({ type: 'PRODUCTS_UPDATED' });
+            const newProdRef = window.firebasePush(window.firebaseRef(window.firebaseDB, 'products'));
+            window.firebaseSet(newProdRef, {
+                firebaseKey: newProdRef.key,
+                id: 'PRD-' + Date.now(),
+                nama, kategori, harga, gambar, deskripsi
+            });
+
             alert('Produk berhasil disimpan & aktif di web utama!');
             e.target.reset();
-            renderAllTables();
         }
 
-        function openModalEdit(id) {
-            const products = JSON.parse(localStorage.getItem('admin_products') || '[]');
-            const p = products.find(prod => prod.id === id);
+        function openModalEdit(firebaseKey) {
+            const p = liveProductsData.find(prod => prod.firebaseKey === firebaseKey);
             if (!p) return;
-            document.getElementById('edit-prod-id').value = p.id;
+            document.getElementById('edit-prod-id').value = p.firebaseKey;
             document.getElementById('edit-prod-nama').value = p.nama;
             document.getElementById('edit-prod-kategori').value = p.kategori;
             document.getElementById('edit-prod-harga').value = p.harga;
             document.getElementById('edit-prod-gambar-base64').value = p.gambar;
-            if (p.specs) {
-                document.getElementById('edit-spec-pondasi').value = p.specs.pondasi || '';
-                document.getElementById('edit-spec-dinding').value = p.specs.dinding || '';
-                document.getElementById('edit-spec-lantai').value = p.specs.lantai || '';
-                document.getElementById('edit-spec-atap').value = p.specs.atap || '';
-                document.getElementById('edit-spec-tambahan').value = p.specs.tambahan || '';
-            }
+            document.getElementById('edit-spec-pondasi').value = p.deskripsi || '';
             document.getElementById('modal-edit-product').classList.remove('hidden');
         }
 
@@ -1128,29 +1119,30 @@
 
         function handleSaveEditProduct(e) {
             e.preventDefault();
-            const id = document.getElementById('edit-prod-id').value;
-            let products = JSON.parse(localStorage.getItem('admin_products') || '[]');
-            const updatedSpecs = {
-                pondasi: document.getElementById('edit-spec-pondasi').value,
-                dinding: document.getElementById('edit-spec-dinding').value,
-                lantai: document.getElementById('edit-spec-lantai').value,
-                atap: document.getElementById('edit-spec-atap').value,
-                tambahan: document.getElementById('edit-spec-tambahan').value
+            const firebaseKey = document.getElementById('edit-prod-id').value;
+            const deskripsi = [
+                document.getElementById('edit-spec-pondasi').value,
+                document.getElementById('edit-spec-dinding').value,
+                document.getElementById('edit-spec-lantai').value,
+                document.getElementById('edit-spec-atap').value,
+                document.getElementById('edit-spec-tambahan').value
+            ].filter(Boolean).join(', ');
+
+            const updatedData = {
+                nama: document.getElementById('edit-prod-nama').value,
+                kategori: document.getElementById('edit-prod-kategori').value,
+                harga: document.getElementById('edit-prod-harga').value,
+                gambar: document.getElementById('edit-prod-gambar-base64').value,
+                deskripsi
             };
-            products = products.map(p => p.id === id ? { ...p, nama: document.getElementById('edit-prod-nama').value, kategori: document.getElementById('edit-prod-kategori').value, harga: document.getElementById('edit-prod-harga').value, specs: updatedSpecs, gambar: document.getElementById('edit-prod-gambar-base64').value } : p);
-            localStorage.setItem('admin_products', JSON.stringify(products));
-            liveChannel.postMessage({ type: 'PRODUCTS_UPDATED' });
+
+            window.firebaseUpdate(window.firebaseRef(window.firebaseDB, `products/${firebaseKey}`), updatedData);
             closeModalEdit();
-            renderAllTables();
         }
 
-        function deleteProduct(id) {
+        function deleteProduct(firebaseKey) {
             if (confirm('Hapus produk ini?')) {
-                let products = JSON.parse(localStorage.getItem('admin_products') || '[]');
-                products = products.filter(p => p.id !== id);
-                localStorage.setItem('admin_products', JSON.stringify(products));
-                liveChannel.postMessage({ type: 'PRODUCTS_UPDATED' });
-                renderAllTables();
+                window.firebaseRemove(window.firebaseRef(window.firebaseDB, `products/${firebaseKey}`));
             }
         }
 
@@ -1166,37 +1158,82 @@
         }
 
         window.addEventListener('DOMContentLoaded', () => {
-            renderAllTables();
             setupImageUpload('prod-gambar-file', 'prod-gambar-base64');
             setupImageUpload('edit-prod-gambar-file', 'edit-prod-gambar-base64');
             setupImageUpload('hero-card-file', 'hero-card-base64');
             setupImageUpload('company-logo-file', 'company-logo-base64');
 
-            const savedProfile = JSON.parse(localStorage.getItem('admin_office_profile') || 'null');
-            if (savedProfile) {
-                if(document.getElementById('kantor-wa')) document.getElementById('kantor-wa').value = savedProfile.wa || '';
-                if(document.getElementById('kantor-alamat')) document.getElementById('kantor-alamat').value = savedProfile.alamat || '';
-            }
+            const checkFirebaseSync = setInterval(() => {
+                if (window.firebaseDB && window.firebaseRef && window.firebaseOnValue) {
+                    clearInterval(checkFirebaseSync);
 
-            const savedHero = JSON.parse(localStorage.getItem('admin_hero_card') || 'null');
-            if (savedHero) {
-                if(document.getElementById('hero-card-title')) document.getElementById('hero-card-title').value = savedHero.title || '';
-                if(document.getElementById('hero-card-desc')) document.getElementById('hero-card-desc').value = savedHero.desc || '';
-                if(document.getElementById('hero-card-price')) document.getElementById('hero-card-price').value = savedHero.price || '';
-            }
+                    // Real-time listener surveys
+                    window.firebaseOnValue(window.firebaseRef(window.firebaseDB, 'surveys'), (snapshot) => {
+                        const val = snapshot.val();
+                        liveSurveysData = val ? Object.keys(val).map(key => ({ firebaseKey: key, ...val[key] })).reverse() : [];
+                        
+                        if (previousSurveysCount !== -1 && liveSurveysData.length > previousSurveysCount) {
+                            showToast("Permintaan Survey Baru!", "Ada permohonan survey lokasi baru dari klien.");
+                        }
+                        previousSurveysCount = liveSurveysData.length;
+                        renderAllTables();
+                    });
 
-            const savedPromo = JSON.parse(localStorage.getItem('admin_floating_promo') || 'null');
-            if (savedPromo) {
-                if(document.getElementById('promo-title-input')) document.getElementById('promo-title-input').value = savedPromo.title || '';
-                if(document.getElementById('promo-desc-input')) document.getElementById('promo-desc-input').value = savedPromo.desc || '';
-            }
+                    // Real-time listener leads / RAB
+                    window.firebaseOnValue(window.firebaseRef(window.firebaseDB, 'leads'), (snapshot) => {
+                        const val = snapshot.val();
+                        liveLeadsData = val ? Object.keys(val).map(key => ({ firebaseKey: key, ...val[key] })).reverse() : [];
+                        
+                        if (previousLeadsCount !== -1 && liveLeadsData.length > previousLeadsCount) {
+                            showToast("Permintaan RAB Baru!", "Ada permohonan estimasi RAB baru dari klien.");
+                        }
+                        previousLeadsCount = liveLeadsData.length;
+                        renderAllTables();
+                    });
 
-            const savedIdentity = JSON.parse(localStorage.getItem('admin_company_identity') || 'null');
-            if (savedIdentity) {
-                if(document.getElementById('company-name-input')) document.getElementById('company-name-input').value = savedIdentity.name || '';
-                if(document.getElementById('company-tagline-input')) document.getElementById('company-tagline-input').value = savedIdentity.tagline || '';
-                if(document.getElementById('company-logo-text-input')) document.getElementById('company-logo-text-input').value = savedIdentity.logoText || '';
-            }
+                    // Real-time listener products
+                    window.firebaseOnValue(window.firebaseRef(window.firebaseDB, 'products'), (snapshot) => {
+                        const val = snapshot.val();
+                        liveProductsData = val ? Object.keys(val).map(key => ({ firebaseKey: key, ...val[key] })) : [];
+                        renderAllTables();
+                    });
+
+                    // Load Settings profile inputs
+                    window.firebaseOnValue(window.firebaseRef(window.firebaseDB, 'settings/profile'), (snapshot) => {
+                        const profile = snapshot.val();
+                        if (profile) {
+                            if(document.getElementById('kantor-wa')) document.getElementById('kantor-wa').value = profile.wa || '';
+                            if(document.getElementById('kantor-alamat')) document.getElementById('kantor-alamat').value = profile.alamat || '';
+                        }
+                    });
+
+                    window.firebaseOnValue(window.firebaseRef(window.firebaseDB, 'settings/hero'), (snapshot) => {
+                        const hero = snapshot.val();
+                        if (hero) {
+                            if(document.getElementById('hero-card-title')) document.getElementById('hero-card-title').value = hero.title || '';
+                            if(document.getElementById('hero-card-desc')) document.getElementById('hero-card-desc').value = hero.desc || '';
+                            if(document.getElementById('hero-card-price')) document.getElementById('hero-card-price').value = hero.price || '';
+                        }
+                    });
+
+                    window.firebaseOnValue(window.firebaseRef(window.firebaseDB, 'settings/promo'), (snapshot) => {
+                        const promo = snapshot.val();
+                        if (promo) {
+                            if(document.getElementById('promo-title-input')) document.getElementById('promo-title-input').value = promo.title || '';
+                            if(document.getElementById('promo-desc-input')) document.getElementById('promo-desc-input').value = promo.desc || '';
+                        }
+                    });
+
+                    window.firebaseOnValue(window.firebaseRef(window.firebaseDB, 'settings/identity'), (snapshot) => {
+                        const identity = snapshot.val();
+                        if (identity) {
+                            if(document.getElementById('company-name-input')) document.getElementById('company-name-input').value = identity.name || '';
+                            if(document.getElementById('company-tagline-input')) document.getElementById('company-tagline-input').value = identity.tagline || '';
+                            if(document.getElementById('company-logo-text-input')) document.getElementById('company-logo-text-input').value = identity.logoText || '';
+                        }
+                    });
+                }
+            }, 100);
         });
     </script>
 </body>
