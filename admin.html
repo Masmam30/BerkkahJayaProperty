@@ -43,7 +43,7 @@
                 <div class="w-10 h-10 bg-bronzeGold text-navyPrimary font-serif font-bold text-xl rounded-lg flex items-center justify-center shadow-md">B</div>
                 <div>
                     <span class="font-serif font-bold text-lg tracking-wider block text-white leading-none">BERKAH JAYA</span>
-                    <span class="text-[9px] tracking-[0.2em] uppercase font-semibold text-bronzeGold">Panel Admin Live</span>
+                    <span class="text-[9px] tracking-[0.2em] uppercase font-semibold text-bronzeGold">Panel Admin Cloud</span>
                 </div>
             </div>
 
@@ -75,9 +75,6 @@
                 <button onclick="switchTab('promo')" id="nav-promo" class="nav-btn w-full flex items-center gap-3 p-3 rounded-lg text-slateText hover:bg-navySecondary hover:text-white transition">
                     <i class="fas fa-percent text-base w-5"></i> Floating Promo
                 </button>
-                <button onclick="switchTab('video')" id="nav-video" class="nav-btn w-full flex items-center gap-3 p-3 rounded-lg text-slateText hover:bg-navySecondary hover:text-white transition">
-                    <i class="fas fa-file-video text-base w-5"></i> Upload Video Hero
-                </button>
                 <button onclick="switchTab('profile')" id="nav-profile" class="nav-btn w-full flex items-center gap-3 p-3 rounded-lg text-slateText hover:bg-navySecondary hover:text-white transition">
                     <i class="fas fa-building text-base w-5"></i> Info Kontak Kantor
                 </button>
@@ -97,24 +94,13 @@
         <header class="flex justify-between items-center mb-10 pb-6 border-b border-borderColor">
             <div>
                 <h1 id="page-title" class="font-serif text-2xl md:text-3xl font-bold text-navyPrimary">Dashboard Ringkasan Utama</h1>
-                <p class="text-xs text-slateText">Pusat Kendali Orderan, Jadwal Survey, Katalog & Pembukuan Transaksi Real-Time.</p>
+                <p class="text-xs text-slateText">Pusat Kendali Orderan, Katalog & Pengaturan Berbasis Firebase Cloud.</p>
             </div>
             <div class="flex items-center gap-2 bg-emerald-50 text-emerald-700 px-3 py-1.5 rounded-full border border-emerald-200 text-xs font-bold">
                 <span class="w-2.5 h-2.5 bg-emerald-500 rounded-full animate-ping"></span>
-                <span>Koneksi Real-Time Aktif</span>
+                <span>Firebase Cloud Aktif</span>
             </div>
         </header>
-
-        <!-- Toast Pop-Up Notification -->
-        <div id="live-toast" class="fixed top-6 right-6 z-50 transform translate-x-full transition-transform duration-500 bg-navyPrimary text-white border border-bronzeGold/50 p-5 rounded-2xl shadow-2xl flex items-start gap-4 max-w-sm">
-            <div class="w-10 h-10 bg-bronzeGold text-navyPrimary rounded-xl flex items-center justify-center text-xl font-bold shrink-0 mt-0.5">
-                <i class="fas fa-bell"></i>
-            </div>
-            <div class="space-y-1 flex-1">
-                <h4 id="toast-title" class="font-serif font-bold text-sm text-bronzeGold">Pesan Baru Masuk!</h4>
-                <p id="toast-message" class="text-xs text-slateText leading-relaxed">Ada permohonan baru dari pengunjung.</p>
-            </div>
-        </div>
 
         <!-- TAB 1: OVERVIEW -->
         <div id="tab-overview" class="tab-content space-y-8">
@@ -229,7 +215,7 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="bg-bronzeGold text-navyPrimary font-bold px-6 py-3 rounded-lg text-xs uppercase tracking-widest hover:bg-navyPrimary hover:text-white transition shadow-md"><i class="fas fa-save mr-1"></i> Simpan Produk</button>
+                    <button type="submit" class="bg-bronzeGold text-navyPrimary font-bold px-6 py-3 rounded-lg text-xs uppercase tracking-widest hover:bg-navyPrimary hover:text-white transition shadow-md"><i class="fas fa-save mr-1"></i> Simpan Produk ke Cloud</button>
                 </form>
             </div>
 
@@ -289,7 +275,7 @@
                     </div>
 
                     <button type="submit" id="btn-submit-gallery" class="bg-bronzeGold text-navyPrimary font-bold px-6 py-3 rounded-lg text-xs uppercase tracking-widest hover:bg-navyPrimary hover:text-white transition shadow-md">
-                        <i class="fas fa-cloud-upload-alt mr-1"></i> Simpan Album Proyek
+                        <i class="fas fa-cloud-upload-alt mr-1"></i> Simpan Album ke Cloud
                     </button>
                 </form>
             </div>
@@ -346,7 +332,7 @@
                         <p class="text-xs text-slateText">Ubah nama merek, tagline, serta logo teks atau logo gambar (PNG/JPG) navbar utama.</p>
                     </div>
                     <span class="bg-emerald-100 text-emerald-800 font-bold px-3 py-1 rounded-full text-xs flex items-center gap-1.5 shadow-sm border border-emerald-300">
-                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Aktif di Web Utama
+                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Sinkron Cloud
                     </span>
                 </div>
                 <form onsubmit="handleCompanyIdentitySave(event)" class="space-y-4">
@@ -364,7 +350,6 @@
                         <div>
                             <label class="block text-xs font-bold text-navyPrimary uppercase mb-1">Logo Inisial Teks (Default)</label>
                             <input type="text" id="company-logo-text-input" maxlength="3" class="w-full bg-lightBg border border-borderColor rounded-lg p-3 text-xs uppercase text-center font-bold text-bronzeGold" value="B">
-                            <p class="text-[10px] text-slateText mt-1">Digunakan jika tidak mengupload gambar logo.</p>
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-navyPrimary uppercase mb-1">Atau Upload Gambar Logo Baru</label>
@@ -373,7 +358,7 @@
                         </div>
                     </div>
                     <button type="submit" class="bg-bronzeGold text-navyPrimary font-bold px-6 py-3 rounded-lg text-xs uppercase tracking-widest hover:bg-navyPrimary hover:text-white transition shadow-md">
-                        <i class="fas fa-save mr-1"></i> Simpan & Perbarui Identitas Logo
+                        <i class="fas fa-save mr-1"></i> Simpan Identitas ke Cloud
                     </button>
                 </form>
             </div>
@@ -388,7 +373,7 @@
                         <p class="text-xs text-slateText">Ubah gambar, judul, keterangan, dan harga pada kartu kanan halaman utama.</p>
                     </div>
                     <span class="bg-emerald-100 text-emerald-800 font-bold px-3 py-1 rounded-full text-xs flex items-center gap-1.5 shadow-sm border border-emerald-300">
-                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Aktif di Web Utama
+                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Sinkron Cloud
                     </span>
                 </div>
                 <form onsubmit="handleHeroCardSave(event)" class="space-y-4">
@@ -410,7 +395,7 @@
                         <input type="hidden" id="hero-card-base64">
                     </div>
                     <button type="submit" class="bg-bronzeGold text-navyPrimary font-bold px-6 py-3 rounded-lg text-xs uppercase tracking-widest hover:bg-navyPrimary hover:text-white transition shadow-md">
-                        <i class="fas fa-save mr-1"></i> Simpan & Sinkronkan Banner
+                        <i class="fas fa-save mr-1"></i> Simpan Banner ke Cloud
                     </button>
                 </form>
             </div>
@@ -425,7 +410,7 @@
                         <p class="text-xs text-slateText">Ubah teks badge pop-up promosi yang melayang di pojok kiri bawah website utama.</p>
                     </div>
                     <span class="bg-emerald-100 text-emerald-800 font-bold px-3 py-1 rounded-full text-xs flex items-center gap-1.5 shadow-sm border border-emerald-300">
-                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Aktif di Web Utama
+                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Sinkron Cloud
                     </span>
                 </div>
                 <form onsubmit="handleFloatingPromoSave(event)" class="space-y-4">
@@ -438,28 +423,7 @@
                         <textarea id="promo-desc-input" rows="3" required class="w-full bg-lightBg border border-borderColor rounded-lg p-3 text-xs focus:outline-none focus:border-bronzeGold resize-none">Diskon 10% Jasa Pengelolaan & Free Survey Lokasi!</textarea>
                     </div>
                     <button type="submit" class="bg-bronzeGold text-navyPrimary font-bold px-6 py-3 rounded-lg text-xs uppercase tracking-widest hover:bg-navyPrimary hover:text-white transition shadow-md">
-                        <i class="fas fa-save mr-1"></i> Simpan & Perbarui Floating Promo
-                    </button>
-                </form>
-            </div>
-        </div>
-
-        <!-- TAB 7: UPLOAD VIDEO HERO -->
-        <div id="tab-video" class="tab-content hidden space-y-6">
-            <div class="bg-white p-8 rounded-2xl border border-borderColor card-shadow max-w-3xl space-y-6">
-                <div class="flex justify-between items-center border-b border-borderColor pb-4">
-                    <div>
-                        <h3 class="font-serif font-bold text-navyPrimary text-xl mb-1">Upload Video Background Hero</h3>
-                        <p class="text-xs text-slateText">Pilih berkas video (MP4) untuk latar belakang bagian utama website.</p>
-                    </div>
-                    <span class="bg-emerald-100 text-emerald-800 font-bold px-3 py-1 rounded-full text-xs flex items-center gap-1.5 shadow-sm border border-emerald-300">
-                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Aktif di Web Utama
-                    </span>
-                </div>
-                <form onsubmit="handleVideoUpload(event)" class="space-y-6">
-                    <input type="file" id="video-file-input" accept="video/mp4" required class="w-full p-3 bg-lightBg border border-borderColor rounded-lg text-xs">
-                    <button type="submit" id="btn-submit-video" class="bg-bronzeGold text-navyPrimary font-bold px-6 py-3 rounded-lg text-xs uppercase tracking-widest hover:bg-navyPrimary hover:text-white transition shadow-md">
-                        <i class="fas fa-cloud-upload-alt mr-1"></i> Simpan Video
+                        <i class="fas fa-save mr-1"></i> Simpan Promo ke Cloud
                     </button>
                 </form>
             </div>
@@ -474,7 +438,7 @@
                         <p class="text-xs text-slateText">Atur nomor WhatsApp resmi dan alamat kantor yang tersinkron otomatis.</p>
                     </div>
                     <span class="bg-emerald-100 text-emerald-800 font-bold px-3 py-1 rounded-full text-xs flex items-center gap-1.5 shadow-sm border border-emerald-300">
-                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Aktif di Web Utama
+                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Sinkron Cloud
                     </span>
                 </div>
                 <form onsubmit="handleProfileSave(event)" class="space-y-4">
@@ -487,7 +451,7 @@
                         <textarea id="kantor-alamat" rows="3" required placeholder="Contoh: Jl. Raya Properti No. 12, Jakarta Selatan" class="w-full bg-lightBg border border-borderColor rounded-lg p-3 text-xs focus:outline-none focus:border-bronzeGold resize-none"></textarea>
                     </div>
                     <button type="submit" class="bg-bronzeGold text-navyPrimary font-bold px-6 py-3 rounded-lg text-xs uppercase tracking-widest hover:bg-navyPrimary hover:text-white transition shadow-md">
-                        <i class="fas fa-save mr-1"></i> Simpan Kontak Kantor
+                        <i class="fas fa-save mr-1"></i> Simpan Kontak ke Cloud
                     </button>
                 </form>
             </div>
@@ -589,105 +553,37 @@
             return cleaned;
         }
 
-        function playBeepSound() {
-            try {
-                const ctx = new (window.AudioContext || window.webkitAudioContext)();
-                const osc = ctx.createOscillator();
-                const gain = ctx.createGain();
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(587.33, ctx.currentTime);
-                gain.gain.setValueAtTime(0.1, ctx.currentTime);
-                osc.connect(gain);
-                gain.connect(ctx.destination);
-                osc.start();
-                osc.stop(ctx.currentTime + 0.3);
-            } catch(e) {}
-        }
-
-        function openDB() {
-            return new Promise((resolve, reject) => {
-                const req = indexedDB.open('BerkahJayaGalleryDB', 2);
-                req.onupgradeneeded = (e) => {
-                    const db = e.target.result;
-                    if (!db.objectStoreNames.contains('projects')) {
-                        db.createObjectStore('projects', { keyPath: 'id' });
-                    }
-                };
-                req.onsuccess = (e) => resolve(e.target.result);
-                req.onerror = (e) => reject(e.target.error);
-            });
-        }
-
-        async function saveProjectToDB(projectData) {
-            const db = await openDB();
-            return new Promise((resolve, reject) => {
-                const tx = db.transaction('projects', 'readwrite');
-                tx.objectStore('projects').put(projectData);
-                tx.oncomplete = () => resolve();
-                tx.onerror = (e) => reject(e.target.error);
-            });
-        }
-
-        async function getAllProjectsFromDB() {
-            try {
-                const db = await openDB();
-                return new Promise((resolve, reject) => {
-                    const req = db.transaction('projects', 'readonly').objectStore('projects').getAll();
-                    req.onsuccess = () => resolve(req.result);
-                    req.onerror = (e) => reject(e.target.error);
-                });
-            } catch (e) { return []; }
-        }
-
-        async function deleteProjectFromDB(id) {
-            const db = await openDB();
-            return new Promise((resolve, reject) => {
-                const tx = db.transaction('projects', 'readwrite');
-                tx.objectStore('projects').delete(id);
-                tx.oncomplete = () => resolve();
-                tx.onerror = (e) => reject(e.target.error);
-            });
-        }
-
-        function openVideoDB() {
-    return new Promise((resolve, reject) => {
-        const req = indexedDB.open('BerkahJayaDB', 3);
-        req.onupgradeneeded = (e) => {
-            const db = e.target.result;
-            if (!db.objectStoreNames.contains('videos')) {
-                db.createObjectStore('videos');
+        // Sinkronisasi Galeri ke Firebase Realtime Database
+        async function saveProjectToCloud(projectData) {
+            if (window.firebaseDB) {
+                const projRef = window.firebaseRef(window.firebaseDB, 'projects/' + projectData.id);
+                await window.firebaseSet(projRef, projectData);
             }
-        };
-        req.onsuccess = (e) => resolve(e.target.result);
-        req.onerror = (e) => reject(e.target.error);
-    });
-}
+        }
 
-        async function handleVideoUpload(e) {
-            e.preventDefault();
-            const fileInput = document.getElementById('video-file-input');
-            const file = fileInput.files[0];
-            if (!file) return;
-
-            if (file.size > 35 * 1024 * 1024) {
-                alert('Ukuran video terlalu besar! Maksimal 35 MB.');
-                return;
+        async function deleteProjectFromCloud(id) {
+            if (window.firebaseDB) {
+                const projRef = window.firebaseRef(window.firebaseDB, 'projects/' + id);
+                await window.firebaseRemove(projRef);
             }
+        }
 
-            try {
-                const db = await openVideoDB();
-                const tx = db.transaction('videos', 'readwrite');
-                const store = tx.objectStore('videos');
-                store.put(file, 'hero_video');
-
-                tx.oncomplete = () => {
-                    alert('Video Hero Berhasil Disimpan & Aktif di Web Utama!');
-                    fileInput.value = '';
-                    liveChannel.postMessage({ type: 'VIDEO_UPDATED' });
-                };
-            } catch (err) {
-                alert('Gagal menyimpan video: ' + err.message);
-            }
+        async function getAllProjectsFromCloud() {
+            return new Promise((resolve) => {
+                if (window.firebaseDB) {
+                    const projRef = window.firebaseRef(window.firebaseDB, 'projects');
+                    window.firebaseOnValue(projRef, (snapshot) => {
+                        const data = snapshot.val();
+                        if (data) {
+                            resolve(Object.values(data));
+                        } else {
+                            resolve([]);
+                        }
+                    }, { onlyOnce: true });
+                } else {
+                    resolve([]);
+                }
+            });
         }
 
         function handleHeroCardSave(e) {
@@ -697,24 +593,33 @@
             const price = document.getElementById('hero-card-price').value;
             let img = document.getElementById('hero-card-base64').value;
 
-            const existing = JSON.parse(localStorage.getItem('admin_hero_card') || '{}');
-            if (!img) img = existing.img || 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=80';
-
-            const heroData = { title, desc, price, img };
-            localStorage.setItem('admin_hero_card', JSON.stringify(heroData));
-            liveChannel.postMessage({ type: 'HERO_CARD_UPDATED', data: heroData });
-            alert('Banner Kartu Hero Berhasil Disimpan & Aktif di Web Utama!');
+            if (window.firebaseDB) {
+                const heroRef = window.firebaseRef(window.firebaseDB, 'settings/hero_card');
+                window.firebaseOnValue(heroRef, (snap) => {
+                    const existing = snap.val() || {};
+                    if (!img) img = existing.img || 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=80';
+                    const heroData = { title, desc, price, img };
+                    window.firebaseSet(heroRef, heroData).then(() => {
+                        liveChannel.postMessage({ type: 'HERO_CARD_UPDATED', data: heroData });
+                        alert('Banner Kartu Hero Berhasil Disimpan ke Cloud!');
+                    });
+                }, { onlyOnce: true });
+            }
         }
 
         function handleFloatingPromoSave(e) {
             e.preventDefault();
             const title = document.getElementById('promo-title-input').value;
             const desc = document.getElementById('promo-desc-input').value;
-
             const promoData = { title, desc };
-            localStorage.setItem('admin_floating_promo', JSON.stringify(promoData));
-            liveChannel.postMessage({ type: 'PROMO_UPDATED', data: promoData });
-            alert('Floating Promo Berhasil Disimpan & Aktif di Web Utama!');
+
+            if (window.firebaseDB) {
+                const promoRef = window.firebaseRef(window.firebaseDB, 'settings/floating_promo');
+                window.firebaseSet(promoRef, promoData).then(() => {
+                    liveChannel.postMessage({ type: 'PROMO_UPDATED', data: promoData });
+                    alert('Floating Promo Berhasil Disimpan ke Cloud!');
+                });
+            }
         }
 
         function handleCompanyIdentitySave(e) {
@@ -724,24 +629,33 @@
             const logoText = document.getElementById('company-logo-text-input').value;
             let logoImg = document.getElementById('company-logo-base64').value;
 
-            const existing = JSON.parse(localStorage.getItem('admin_company_identity') || '{}');
-            if (!logoImg) logoImg = existing.logoImg || '';
-
-            const identityData = { name, tagline, logoText, logoImg };
-            localStorage.setItem('admin_company_identity', JSON.stringify(identityData));
-            liveChannel.postMessage({ type: 'IDENTITY_UPDATED', data: identityData });
-            alert('Logo & Identitas Perusahaan Berhasil Disimpan & Aktif di Web Utama!');
+            if (window.firebaseDB) {
+                const idRef = window.firebaseRef(window.firebaseDB, 'settings/company_identity');
+                window.firebaseOnValue(idRef, (snap) => {
+                    const existing = snap.val() || {};
+                    if (!logoImg) logoImg = existing.logoImg || '';
+                    const identityData = { name, tagline, logoText, logoImg };
+                    window.firebaseSet(idRef, identityData).then(() => {
+                        liveChannel.postMessage({ type: 'IDENTITY_UPDATED', data: identityData });
+                        alert('Identitas Perusahaan Berhasil Disimpan ke Cloud!');
+                    });
+                }, { onlyOnce: true });
+            }
         }
 
         function handleProfileSave(e) {
             e.preventDefault();
             const wa = document.getElementById('kantor-wa').value;
             const alamat = document.getElementById('kantor-alamat').value;
-
             const profileData = { wa, alamat };
-            localStorage.setItem('admin_office_profile', JSON.stringify(profileData));
-            liveChannel.postMessage({ type: 'PROFILE_UPDATED', data: profileData });
-            alert('Kontak & Alamat Kantor Berhasil Disimpan & Aktif di Web Utama!');
+
+            if (window.firebaseDB) {
+                const profRef = window.firebaseRef(window.firebaseDB, 'settings/office_profile');
+                window.firebaseSet(profRef, profileData).then(() => {
+                    liveChannel.postMessage({ type: 'PROFILE_UPDATED', data: profileData });
+                    alert('Kontak Kantor Berhasil Disimpan ke Cloud!');
+                });
+            }
         }
 
         function switchTab(tabId) {
@@ -769,49 +683,28 @@
                 'identity': 'Pengaturan Logo & Identitas Perusahaan',
                 'hero': 'Pengaturan Banner Kartu Hero',
                 'promo': 'Pengaturan Floating Promo',
-                'video': 'Upload Video Background Hero',
                 'profile': 'Pengaturan Kontak Kantor'
             };
             document.getElementById('page-title').textContent = titles[tabId] || 'Dashboard Admin';
             renderAllTables();
         }
 
-        function updateMenuBadges(surveysCount, leadsCount) {
-            const bOv = document.getElementById('badge-overview');
-            const bSrv = document.getElementById('badge-surveys');
-            const bLd = document.getElementById('badge-leads');
-            const total = surveysCount + leadsCount;
-
-            if (total > 0) { bOv.textContent = total; bOv.classList.remove('hidden'); } else { bOv.classList.add('hidden'); }
-            if (surveysCount > 0) { bSrv.textContent = surveysCount; bSrv.classList.remove('hidden'); } else { bSrv.classList.add('hidden'); }
-            if (leadsCount > 0) { bLd.textContent = leadsCount; bLd.classList.remove('hidden'); } else { bLd.classList.add('hidden'); }
-        }
-
         async function renderAllTables() {
             const surveys = JSON.parse(localStorage.getItem('admin_surveys') || '[]');
             const leads = JSON.parse(localStorage.getItem('admin_leads') || '[]');
-            
-            // Mengambil produk dari Firebase Realtime Database
+
+            // Load Produk dari Firebase
             if (window.firebaseDB) {
                 const prodRef = window.firebaseRef(window.firebaseDB, 'products');
                 window.firebaseOnValue(prodRef, (snapshot) => {
                     const data = snapshot.val();
-                    let products = [];
-                    if (data) {
-                        products = Object.keys(data).map(key => ({ id: key, ...data[key] }));
-                    }
-                    localStorage.setItem('admin_products', JSON.stringify(products));
+                    let products = data ? Object.keys(data).map(key => ({ id: key, ...data[key] })) : [];
                     renderProductsTable(products);
                 }, { onlyOnce: true });
-            } else {
-                const products = JSON.parse(localStorage.getItem('admin_products') || '[]');
-                renderProductsTable(products);
             }
 
             const pSurveys = surveys.filter(s => s.status !== 'Sudah Ditindaklanjuti');
             const pLeads = leads.filter(l => l.status !== 'Sudah Ditindaklanjuti');
-
-            updateMenuBadges(pSurveys.length, pLeads.length);
 
             document.getElementById('stat-pending-surveys').textContent = pSurveys.length;
             document.getElementById('stat-pending-leads').textContent = pLeads.length;
@@ -874,7 +767,7 @@
                         <td class="p-4"><span class="bg-navyPrimary text-white text-[10px] px-2.5 py-1 rounded-md">${p.kategori}</span></td>
                         <td class="p-4 font-mono font-bold text-bronzeGold">Rp ${parseInt(p.harga).toLocaleString('id-ID')} / m²</td>
                         <td class="p-4 text-[11px]">${p.specs ? Object.values(p.specs).filter(Boolean).join(' | ') : '-'}</td>
-                        <td class="p-4"><span class="bg-emerald-100 text-emerald-800 font-bold px-2.5 py-1 rounded-full text-[9px] border border-emerald-300 inline-flex items-center gap-1"><span class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span> Aktif di Web</span></td>
+                        <td class="p-4"><span class="bg-emerald-100 text-emerald-800 font-bold px-2.5 py-1 rounded-full text-[9px] border border-emerald-300 inline-flex items-center gap-1"><span class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span> Cloud Aktif</span></td>
                         <td class="p-4 text-right space-x-2">
                             <button onclick="openModalEdit('${p.id}')" class="bg-bronzeGold text-navyPrimary px-3 py-1.5 rounded-md text-[10px] font-bold">Edit</button>
                             <button onclick="deleteProduct('${p.id}')" class="bg-rose-500 text-white px-3 py-1.5 rounded-md text-[10px] font-bold">Hapus</button>
@@ -886,34 +779,16 @@
 
         function exportLeadsToExcel() {
             const leads = JSON.parse(localStorage.getItem('admin_leads') || '[]');
-            if (leads.length === 0) {
-                alert('Tidak ada data orderan atau RAB untuk diexport.');
-                return;
-            }
-
-            let csvContent = "ID Order,Tanggal Masuk,Nama Pelanggan,Nomor WhatsApp,Kategori Pekerjaan,Keterangan Pesanan,Status\n";
-            
+            if (leads.length === 0) { alert('Tidak ada data.'); return; }
+            let csvContent = "ID Order,Tanggal,Nama,WhatsApp,Kategori,Pesanan,Status\n";
             leads.forEach(l => {
-                const row = [
-                    `"${l.id || ''}"`,
-                    `"${l.tanggal || ''} ${l.timestamp || ''}"`,
-                    `"${(l.nama || '').replace(/"/g, '""')}"`,
-                    `"${l.wa || ''}"`,
-                    `"${(l.kategori || '').replace(/"/g, '""')}"`,
-                    `"${(l.pesanan || '').replace(/"/g, '""')}"`,
-                    `"${l.status || 'Belum Diproses'}"`
-                ];
-                csvContent += row.join(",") + "\n";
+                csvContent += `"${l.id}","${l.tanggal}","${l.nama}","${l.wa}","${l.kategori}","${l.pesanan}","${l.status}"\n`;
             });
-
             const blob = new Blob(["\ufeff" + csvContent], { type: 'text/csv;charset=utf-8;' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
-            a.setAttribute('href', url);
-            a.setAttribute('download', `Rekap_Order_BerkahJaya_${new Date().toISOString().slice(0, 10)}.csv`);
-            document.body.appendChild(a);
+            a.href = url; a.download = `Rekap_RAB.csv`;
             a.click();
-            document.body.removeChild(a);
         }
 
         function renderFullSurveysTable(surveys) {
@@ -941,7 +816,7 @@
             if (!tbody) return;
             tbody.innerHTML = leads.map(l => `
                 <tr class="hover:bg-lightBg">
-                    <td class="p-4 font-mono"><b>${l.id}</b><br><span class="text-[10px] text-slateText">${l.tanggal}</span></td>
+                    <td class="p-4 font-mono"><b>${l.id}</b></td>
                     <td class="p-4 font-bold text-navyPrimary">${l.nama}</td>
                     <td class="p-4 font-mono font-bold">${l.wa}</td>
                     <td class="p-4">${l.kategori}</td>
@@ -959,29 +834,10 @@
             const list = JSON.parse(localStorage.getItem(type === 'survey' ? 'admin_surveys' : 'admin_leads') || '[]');
             const item = list.find(d => d.id === id);
             if (!item) return;
-
             document.getElementById('modal-detail-title').textContent = type === 'survey' ? 'Detail Permintaan Survey' : 'Detail Permintaan RAB';
-            document.getElementById('modal-detail-id').textContent = `ID: ${item.id} (${item.tanggal || item.timestamp || '-'})`;
-
+            document.getElementById('modal-detail-id').textContent = `ID: ${item.id}`;
             const contentDiv = document.getElementById('modal-detail-content');
-            if (type === 'survey') {
-                contentDiv.innerHTML = `
-                    <div class="bg-lightBg p-3 rounded-lg border space-y-2">
-                        <div><strong class="text-slateText uppercase text-[10px] block">Nama:</strong> <span class="font-bold text-sm">${item.nama}</span></div>
-                        <div><strong class="text-slateText uppercase text-[10px] block">No. HP:</strong> <span class="font-mono font-bold">${item.hp}</span></div>
-                        <div><strong class="text-slateText uppercase text-[10px] block">Alamat:</strong> <span>${item.alamat}</span></div>
-                        <div><strong class="text-slateText uppercase text-[10px] block">Layanan:</strong> <span class="text-bronzeGold font-bold">${item.layanan}</span></div>
-                        <div><strong class="text-slateText uppercase text-[10px] block">Tanggal:</strong> <span>${item.tanggal}</span></div>
-                    </div>`;
-            } else {
-                contentDiv.innerHTML = `
-                    <div class="bg-lightBg p-3 rounded-lg border space-y-2">
-                        <div><strong class="text-slateText uppercase text-[10px] block">Nama:</strong> <span class="font-bold text-sm">${item.nama}</span></div>
-                        <div><strong class="text-slateText uppercase text-[10px] block">WhatsApp:</strong> <span class="font-mono font-bold">${item.wa}</span></div>
-                        <div><strong class="text-slateText uppercase text-[10px] block">Kategori:</strong> <span class="text-bronzeGold font-bold">${item.kategori}</span></div>
-                        <div><strong class="text-slateText uppercase text-[10px] block">Keterangan:</strong> <p class="bg-white p-2 rounded border mt-1">${item.pesanan || '-'}</p></div>
-                    </div>`;
-            }
+            contentDiv.innerHTML = `<div class="bg-lightBg p-3 rounded-lg border space-y-2"><div><strong class="text-slateText uppercase text-[10px] block">Nama:</strong> <span class="font-bold text-sm">${item.nama}</span></div><div><strong class="text-slateText uppercase text-[10px] block">Kontak:</strong> <span class="font-mono font-bold">${item.hp || item.wa}</span></div><div><strong class="text-slateText uppercase text-[10px] block">Keterangan:</strong> <span>${item.alamat || item.pesanan || '-'}</span></div></div>`;
             document.getElementById('modal-detail-client').classList.remove('hidden');
         }
 
@@ -993,18 +849,12 @@
                 let surveys = JSON.parse(localStorage.getItem('admin_surveys') || '[]');
                 surveys = surveys.map(s => { if (s.id === id) { s.status = 'Sudah Ditindaklanjuti'; item = s; } return s; });
                 localStorage.setItem('admin_surveys', JSON.stringify(surveys));
-                if (item) {
-                    phone = formatWA(item.hp);
-                    msg = `Halo *${item.nama}*, terima kasih telah mengajukan *Survey Lokasi Gratis* di Berkah Jaya Property untuk layanan *${item.layanan}* pada *${item.tanggal}* di *${item.alamat}*. Tim teknis kami siap hadir.`;
-                }
+                if (item) { phone = formatWA(item.hp); msg = `Halo *${item.nama}*, survey Anda kami terima.`; }
             } else {
                 let leads = JSON.parse(localStorage.getItem('admin_leads') || '[]');
                 leads = leads.map(l => { if (l.id === id) { l.status = 'Sudah Ditindaklanjuti'; item = l; } return l; });
                 localStorage.setItem('admin_leads', JSON.stringify(leads));
-                if (item) {
-                    phone = formatWA(item.wa);
-                    msg = `Halo *${item.nama}*, terima kasih telah menghubungi Berkah Jaya Property. Kami telah menerima permintaan *RAB* Anda untuk *${item.kategori}*. Kami sedang menyiapkan rincian anggarannya.`;
-                }
+                if (item) { phone = formatWA(item.wa); msg = `Halo *${item.nama}*, RAB Anda sedang kami proses.`; }
             }
             renderAllTables();
             if (phone) window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
@@ -1038,7 +888,7 @@
             e.preventDefault();
             const btn = document.getElementById('btn-submit-gallery');
             btn.disabled = true;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i> Menyimpan...';
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i> Menyimpan ke Cloud...';
 
             try {
                 const judul = document.getElementById('proj-judul').value;
@@ -1047,9 +897,7 @@
                 const files = Array.from(document.getElementById('proj-photos-file').files);
 
                 let photos = [];
-                for (let f of files) {
-                    photos.push(await readAndCompressFile(f));
-                }
+                for (let f of files) { photos.push(await readAndCompressFile(f)); }
 
                 let beforeImg = null, afterImg = null;
                 if (isBA) {
@@ -1060,10 +908,10 @@
                 }
 
                 const newProj = { id: 'PRJ-' + Date.now(), judul, kategori, photos, isBeforeAfter: isBA, beforeImg, afterImg };
-                await saveProjectToDB(newProj);
+                await saveProjectToCloud(newProj);
                 
                 liveChannel.postMessage({ type: 'PROJECTS_UPDATED' });
-                alert('Album Proyek Berhasil Disimpan & Aktif di Web Utama!');
+                alert('Album Proyek Berhasil Disimpan ke Firebase Cloud!');
                 e.target.reset();
                 toggleBeforeAfterInputs(false);
                 renderProjectsTable();
@@ -1071,20 +919,20 @@
                 alert('Gagal: ' + err.message);
             } finally {
                 btn.disabled = false;
-                btn.innerHTML = '<i class="fas fa-cloud-upload-alt mr-1"></i> Simpan Album Proyek';
+                btn.innerHTML = '<i class="fas fa-cloud-upload-alt mr-1"></i> Simpan Album ke Cloud';
             }
         }
 
         async function handleDeleteProject(id) {
-            if (confirm('Hapus album proyek ini?')) {
-                await deleteProjectFromDB(id);
+            if (confirm('Hapus album proyek ini dari cloud?')) {
+                await deleteProjectFromCloud(id);
                 liveChannel.postMessage({ type: 'PROJECTS_UPDATED' });
                 renderProjectsTable();
             }
         }
 
         async function renderProjectsTable() {
-            const projects = await getAllProjectsFromDB();
+            const projects = await getAllProjectsFromCloud();
             const tbody = document.getElementById('projects-tbody');
             if (!tbody) return;
 
@@ -1100,7 +948,7 @@
                     <td class="p-4"><span class="bg-navyPrimary text-white text-[10px] px-2.5 py-1 rounded-md">${p.kategori}</span></td>
                     <td class="p-4 font-bold text-bronzeGold">${p.photos.length} Foto</td>
                     <td class="p-4">${p.isBeforeAfter ? '<span class="bg-emerald-100 text-emerald-700 font-bold px-2 py-1 rounded-md text-[10px]">Aktif</span>' : '-'}</td>
-                    <td class="p-4"><span class="bg-emerald-100 text-emerald-800 font-bold px-2.5 py-1 rounded-full text-[9px] border border-emerald-300 inline-flex items-center gap-1"><span class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span> Aktif di Web</span></td>
+                    <td class="p-4"><span class="bg-emerald-100 text-emerald-800 font-bold px-2.5 py-1 rounded-full text-[9px] border border-emerald-300 inline-flex items-center gap-1"><span class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span> Cloud Aktif</span></td>
                     <td class="p-4 text-right"><button onclick="handleDeleteProject('${p.id}')" class="bg-rose-500 text-white px-3 py-1.5 rounded-md text-[10px] font-bold">Hapus</button></td>
                 </tr>
             `).join('');
@@ -1124,42 +972,35 @@
                 const prodRef = window.firebaseRef(window.firebaseDB, 'products');
                 window.firebasePush(prodRef, { nama, kategori, harga, gambar, specs })
                     .then(() => {
-                        alert('Produk berhasil disimpan ke Firebase Realtime Database & aktif di web utama!');
+                        alert('Produk berhasil disimpan ke Firebase Cloud!');
                         e.target.reset();
                         liveChannel.postMessage({ type: 'PRODUCTS_UPDATED' });
                         renderAllTables();
-                    })
-                    .catch((error) => {
-                        alert('Gagal menyimpan ke Firebase: ' + error.message);
                     });
-            } else {
-                let products = JSON.parse(localStorage.getItem('admin_products') || '[]');
-                products.unshift({ id: 'PRD-' + Date.now(), nama, kategori, harga, gambar, specs });
-                localStorage.setItem('admin_products', JSON.stringify(products));
-                liveChannel.postMessage({ type: 'PRODUCTS_UPDATED' });
-                alert('Produk berhasil disimpan & aktif di web utama!');
-                e.target.reset();
-                renderAllTables();
             }
         }
 
         function openModalEdit(id) {
-            const products = JSON.parse(localStorage.getItem('admin_products') || '[]');
-            const p = products.find(prod => prod.id === id);
-            if (!p) return;
-            document.getElementById('edit-prod-id').value = p.id;
-            document.getElementById('edit-prod-nama').value = p.nama;
-            document.getElementById('edit-prod-kategori').value = p.kategori;
-            document.getElementById('edit-prod-harga').value = p.harga;
-            document.getElementById('edit-prod-gambar-base64').value = p.gambar;
-            if (p.specs) {
-                document.getElementById('edit-spec-pondasi').value = p.specs.pondasi || '';
-                document.getElementById('edit-spec-dinding').value = p.specs.dinding || '';
-                document.getElementById('edit-spec-lantai').value = p.specs.lantai || '';
-                document.getElementById('edit-spec-atap').value = p.specs.atap || '';
-                document.getElementById('edit-spec-tambahan').value = p.specs.tambahan || '';
+            if (window.firebaseDB) {
+                const itemRef = window.firebaseRef(window.firebaseDB, 'products/' + id);
+                window.firebaseOnValue(itemRef, (snap) => {
+                    const p = snap.val();
+                    if (!p) return;
+                    document.getElementById('edit-prod-id').value = id;
+                    document.getElementById('edit-prod-nama').value = p.nama;
+                    document.getElementById('edit-prod-kategori').value = p.kategori;
+                    document.getElementById('edit-prod-harga').value = p.harga;
+                    document.getElementById('edit-prod-gambar-base64').value = p.gambar;
+                    if (p.specs) {
+                        document.getElementById('edit-spec-pondasi').value = p.specs.pondasi || '';
+                        document.getElementById('edit-spec-dinding').value = p.specs.dinding || '';
+                        document.getElementById('edit-spec-lantai').value = p.specs.lantai || '';
+                        document.getElementById('edit-spec-atap').value = p.specs.atap || '';
+                        document.getElementById('edit-spec-tambahan').value = p.specs.tambahan || '';
+                    }
+                    document.getElementById('modal-edit-product').classList.remove('hidden');
+                }, { onlyOnce: true });
             }
-            document.getElementById('modal-edit-product').classList.remove('hidden');
         }
 
         function closeModalEdit() { document.getElementById('modal-edit-product').classList.add('hidden'); }
@@ -1181,41 +1022,24 @@
                 }
             };
 
-            if (window.firebaseDB && !id.startsWith('PRD-local')) {
+            if (window.firebaseDB) {
                 const itemRef = window.firebaseRef(window.firebaseDB, 'products/' + id);
-                window.firebaseUpdate(itemRef, updatedData)
-                    .then(() => {
-                        liveChannel.postMessage({ type: 'PRODUCTS_UPDATED' });
-                        closeModalEdit();
-                        renderAllTables();
-                    })
-                    .catch(err => alert('Gagal update: ' + err.message));
-            } else {
-                let products = JSON.parse(localStorage.getItem('admin_products') || '[]');
-                products = products.map(p => p.id === id ? { ...p, ...updatedData } : p);
-                localStorage.setItem('admin_products', JSON.stringify(products));
-                liveChannel.postMessage({ type: 'PRODUCTS_UPDATED' });
-                closeModalEdit();
-                renderAllTables();
+                window.firebaseUpdate(itemRef, updatedData).then(() => {
+                    liveChannel.postMessage({ type: 'PRODUCTS_UPDATED' });
+                    closeModalEdit();
+                    renderAllTables();
+                });
             }
         }
 
         function deleteProduct(id) {
-            if (confirm('Hapus produk ini?')) {
-                if (window.firebaseDB && !id.startsWith('PRD-local')) {
+            if (confirm('Hapus produk ini dari cloud?')) {
+                if (window.firebaseDB) {
                     const itemRef = window.firebaseRef(window.firebaseDB, 'products/' + id);
-                    window.firebaseRemove(itemRef)
-                        .then(() => {
-                            liveChannel.postMessage({ type: 'PRODUCTS_UPDATED' });
-                            renderAllTables();
-                        })
-                        .catch(err => alert('Gagal menghapus: ' + err.message));
-                } else {
-                    let products = JSON.parse(localStorage.getItem('admin_products') || '[]');
-                    products = products.filter(p => p.id !== id);
-                    localStorage.setItem('admin_products', JSON.stringify(products));
-                    liveChannel.postMessage({ type: 'PRODUCTS_UPDATED' });
-                    renderAllTables();
+                    window.firebaseRemove(itemRef).then(() => {
+                        liveChannel.postMessage({ type: 'PRODUCTS_UPDATED' });
+                        renderAllTables();
+                    });
                 }
             }
         }
@@ -1237,32 +1061,6 @@
             setupImageUpload('edit-prod-gambar-file', 'edit-prod-gambar-base64');
             setupImageUpload('hero-card-file', 'hero-card-base64');
             setupImageUpload('company-logo-file', 'company-logo-base64');
-
-            const savedProfile = JSON.parse(localStorage.getItem('admin_office_profile') || 'null');
-            if (savedProfile) {
-                if(document.getElementById('kantor-wa')) document.getElementById('kantor-wa').value = savedProfile.wa || '';
-                if(document.getElementById('kantor-alamat')) document.getElementById('kantor-alamat').value = savedProfile.alamat || '';
-            }
-
-            const savedHero = JSON.parse(localStorage.getItem('admin_hero_card') || 'null');
-            if (savedHero) {
-                if(document.getElementById('hero-card-title')) document.getElementById('hero-card-title').value = savedHero.title || '';
-                if(document.getElementById('hero-card-desc')) document.getElementById('hero-card-desc').value = savedHero.desc || '';
-                if(document.getElementById('hero-card-price')) document.getElementById('hero-card-price').value = savedHero.price || '';
-            }
-
-            const savedPromo = JSON.parse(localStorage.getItem('admin_floating_promo') || 'null');
-            if (savedPromo) {
-                if(document.getElementById('promo-title-input')) document.getElementById('promo-title-input').value = savedPromo.title || '';
-                if(document.getElementById('promo-desc-input')) document.getElementById('promo-desc-input').value = savedPromo.desc || '';
-            }
-
-            const savedIdentity = JSON.parse(localStorage.getItem('admin_company_identity') || 'null');
-            if (savedIdentity) {
-                if(document.getElementById('company-name-input')) document.getElementById('company-name-input').value = savedIdentity.name || '';
-                if(document.getElementById('company-tagline-input')) document.getElementById('company-tagline-input').value = savedIdentity.tagline || '';
-                if(document.getElementById('company-logo-text-input')) document.getElementById('company-logo-text-input').value = savedIdentity.logoText || '';
-            }
         });
     </script>
 </body>
